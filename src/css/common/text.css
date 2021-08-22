@@ -1,0 +1,22 @@
+.text-heading {
+    font-weight: 700;
+    font-size: 24px;
+    color: #111;
+    text-decoration-style: solid;
+}
+
+.text-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #111;
+}
+
+.text-branch {
+    font-weight: bold;
+    font-size: 14px;
+    color: #111;
+}
+
+.notosans-bold {
+    font-family: 'Notosans-Bold';
+}

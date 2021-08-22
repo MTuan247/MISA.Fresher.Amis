@@ -1,0 +1,28 @@
+.v-context-menu .v-btn {
+    color: #0075c0 !important;
+    box-shadow: none !important;
+    background-color: #fff !important;
+    padding: 0 !important;
+    min-width: unset !important;
+    width: 36px;
+}
+
+.v-context-menu .v-btn:before {
+    border: none;
+    background-color: #fff !important;
+}
+
+.v-context-menu.v-menu__content {
+    transform: translateX(-20px);
+    border-radius: 2px !important;
+    border: 1px solid #babec5;
+}
+
+.v-context-menu .v-list-item {
+    min-height: unset;
+    height: 32px;
+}
+
+.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):hover {
+    color: #08bf1e !important;
+}

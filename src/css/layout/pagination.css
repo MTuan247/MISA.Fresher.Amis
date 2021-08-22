@@ -1,0 +1,78 @@
+
+/*
+*   CSS Paging bar
+*
+*/
+
+.paging-bar {
+    display: flex;
+    height: 56px;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 16px; */
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-bottom: 8px;
+}
+
+.paging-bar .paging-right {
+    margin-right: 24px;
+    display: flex;
+}
+
+.paging-bar .paging-dropdown {
+    border: 1px solid #babec5;
+    margin-right: 8px;
+}
+
+.paging-bar .paging-index {
+    display: flex;
+    align-items: center;
+}
+
+.paging-bar .paging-index .paging-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    /* border-radius: 25px; */
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.paging-bar .paging-index .paging-control {
+    width: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.paging-bar .paging-index .paging-prev {
+    margin-right: 8px;
+}
+
+.paging-bar .paging-index .paging-next {
+    margin-left: 8px;
+}
+
+.paging-bar .paging-index .paging-control--disabled {
+    filter: invert(80%) sepia(2%) saturate(109%) hue-rotate(330deg) brightness(96%) contrast(86%);
+    cursor: default;
+}
+
+.paging-bar .paging-index .paging-number {
+    /* background-color: #dddddd; */
+    border: none;
+    font-size: 13px;
+}
+
+.paging-bar .paging-index .paging-number--active {
+    border: 1px solid #e0e0e0;
+    font-weight: 700;
+}
+
+.paging-bar .paging-index .paging-ellipsis {
+    margin: 0;
+    width: 16px;
+}

@@ -1,0 +1,94 @@
+.content {
+    position: absolute;
+    top: 48px;
+    width: calc(100% - 180px);
+    height: calc(100% - 48px);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: #f4f5f8;
+    padding-right: 16px;
+}
+
+.content--collapsed {
+    width: calc(100% - 50px);
+}
+
+/* Content header */
+
+.content .content-header {
+    display: flex;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content .content-header .content-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Main content css */
+
+.content .main-content {
+    border-radius: 2px;
+    height: 100vh;
+    background-color: #fff;
+    margin: 16px;
+    margin-bottom: 8px;
+    padding: 16px;
+}
+
+/* filter bar */
+
+.content .filter-bar {
+    /* background-color: #fff; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .filter-bar .btn-action-area {
+    flex-grow: 0;
+}
+
+.content .filter-bar .btn-action {
+    margin-left: 8px;
+}
+
+
+/* input field */
+
+.content .filter-bar .search-field {
+    width: 250px;
+    height: 32px;
+}
+
+.content .filter-bar .search-field .search-icon {
+    position: absolute;
+    right: 8px;
+}
+
+/* filter dropdown */
+
+.content .filter-bar .filter {
+    width: 300px;
+    margin-left: 16px;
+}
+
+.content .filter-bar .delete {
+    padding: 0;
+    width: 48px;
+}
+
+.content .filter-bar .refresh {
+    border: none;
+    height: 24px;
+    width: 24px;
+    padding: 0 12px;
+}
+
+.content .filter-bar .refresh:focus {
+    background-color: #fff;
+}

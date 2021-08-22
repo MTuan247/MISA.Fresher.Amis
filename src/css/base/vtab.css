@@ -1,0 +1,11 @@
+.tab-input {
+    flex-direction: column;
+}
+
+.tab-input .v-tabs-items {
+    /* background-color: aqua !important; */
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    border: 1px solid #c9ccd2;
+}

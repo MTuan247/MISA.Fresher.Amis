@@ -1,0 +1,28 @@
+.v-input-radio .v-input--radio-group {
+    margin-top: unset !important;
+    padding-top: unset !important;
+}
+
+.v-input-radio .v-input--radio-group .v-input__control {
+    height: var(--input-height) !important;
+}
+
+.v-input-radio .v-input--radio-group .v-radio {
+    height: var(--input-height) !important;
+    margin-right: 24px;
+}
+
+.v-input-radio .v-input--radio-group .v-item--active .v-icon {
+    color: var(--primary-color) !important;
+    caret-color: var(--primary-color) !important;
+}
+
+.v-input-radio .v-label {
+    padding-left: 8px;
+    color: var(--text-color) !important;
+    font-size: 13px;
+}
+
+.v-input-radio .v-input--selection-controls__input:hover .v-input--selection-controls__ripple:before {
+    transform: scale(1.2);
+}

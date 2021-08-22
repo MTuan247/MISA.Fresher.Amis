@@ -1,0 +1,147 @@
+
+/* grid CSS */
+.grid {
+    /* height: calc(100vh - 325px); */
+    overflow: auto;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    background-color: #fff;
+    flex-grow: 1;
+    flex-basis: 0px;
+    /* margin: 0 16px; */
+}
+
+.grid .text-align-center {
+    text-align: center;
+}
+
+.grid .text-align-right {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.grid .sticky {
+    position: sticky;
+    z-index: 1;
+}
+
+.grid th.sticky {
+    z-index: 3;
+}
+
+.grid::-webkit-scrollbar-track {
+    margin-top: 36px;
+    /* margin-left: 390px;
+    margin-right: 100px; */
+}
+
+.grid::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+.grid table {
+    width: 100%;
+    table-layout: fixed;
+    overflow: auto;
+}
+
+.grid th,td {
+    height: 36px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+    border-bottom: 1px solid #c7c7c7;
+    font-size: 12px;
+}
+
+.grid th:last-child {
+    border-left: 1px solid #c7c7c7;
+}
+
+.grid tr td:last-child {
+    border-left: 1px dotted #c7c7c7;
+}
+
+.grid tr th:nth-last-child(2),
+.grid tr td:nth-last-child(2) {
+    border-right: none;
+}
+
+.grid th {
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 2;
+    text-align: left;
+    cursor: pointer;
+    background-color: #eceef1;
+    border-right: 1px solid #c7c7c7;
+}
+
+.grid td {
+    color: #111;
+    border-right: 1px dotted #c7c7c7;
+    background-color: #fff;
+}
+
+.grid table tr:hover td {
+    background-color: #EBF9F4;
+}
+
+.grid table tr:hover .v-btn {
+    background-color: #EBF9F4 !important;
+}
+
+.grid .check-box {
+    text-align: center;
+    /* position: relative; */
+}
+
+.grid .check-box input {
+    position: absolute;
+    /* top: 14px;
+    left: 18px; */
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.grid .custom-checkbox {
+    position: absolute;
+    /* top: 14px;
+    left: 18px; */
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+}
+
+.grid .custom-checkbox--selected {
+    border-color: #2ca01c;
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat;
+    background-position: -1224px -360px;
+}
+
+.grid .custom-checkbox i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    display: none;
+    color: #2ca01c;
+}
+
+.grid .custom-checkbox--selected i {
+    display: none;
+}

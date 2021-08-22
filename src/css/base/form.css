@@ -1,0 +1,146 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.8);
+    /* display: none; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* padding: 5px 0; */
+    z-index: 999;
+}
+
+.modal ::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* .modal ::-webkit-scrollbar-track {
+    margin-top: 60px;
+    margin-bottom: 4px;
+} */
+
+.info-form {
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    /* overflow: auto; */
+    width: 900px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.info-form:hover {
+    box-shadow: 2px 2px 5px var(--border-color);
+}
+
+/*
+*
+*  CSS Header of form
+*
+*/
+
+
+.info-form .close {
+    position: absolute;
+    /* right: 12px;
+    top: 18px; */
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+}
+
+.info-form .form__header {
+    position: sticky;
+    top: 0px;
+    background-color: #fff;
+    z-index: 10;
+    padding: 20px 32px 20px 32px;
+    font-weight: 700;
+    height: 60px;
+}
+
+
+/* 
+*   CSS form body 
+*/
+
+.info-form .form__body {
+    display: flex;
+    padding: 24px;
+    padding-top: 0px;
+    overflow: auto;
+    max-height: calc(100vh - 135px);
+}
+
+.info-form .label {
+    font-size: 13px;
+    color: #111;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+/* 
+*   CSS form content - input 
+*/
+
+.info-form .form__input {
+    padding-right: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+.info-form .form__field-input {
+    margin-left: 8px;
+    margin-top: 12px;
+    flex-grow: 1;
+}
+
+.info-form #code-input {
+    width: 150px;
+}
+
+.info-form #gender-input {
+    margin-left: 16px;
+}
+
+.info-form .mx-datepicker,
+.info-form .date-input {
+    width: 150px !important;
+}
+
+/* Set width cho input ngắn */
+.info-form .sub-input {
+    width: calc(25% - 6px);
+}
+
+/* 
+*   CSS form footer 
+*/
+
+.info-form .form__footer {
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 75px;
+    margin: 0 32px;
+}
+
+.info-form .form__footer #cancel,
+.info-form .form__footer #submit,
+.info-form .form__footer #save {
+    margin-left: 16px;
+    width: 75px;
+    height: 36px;
+    /* padding: 0 16px; */
+}
+
+.info-form .form__footer #cancel {
+    margin-left: 0;
+}
+
+.info-form .form__footer #submit {
+    width: 120px !important;
+}

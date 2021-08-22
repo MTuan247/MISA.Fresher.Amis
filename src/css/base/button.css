@@ -1,0 +1,88 @@
+.btn-default {
+    cursor: pointer;
+    background-color: #2ca01c;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+    padding: 0 24px;
+    text-align: center;
+    border: 0;
+    height: 36px;
+}
+
+.btn-base:focus {
+    outline: none;
+}
+
+.btn-default:hover {
+    background-color: #35bf22;
+}
+
+.btn-default--pressed {
+    background-color: #01B075;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #2ca01c;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+    padding: 0 16px;
+    text-align: left;
+    border: 0;
+    height: 36px;
+    user-select: none;
+}
+
+.btn-icon:hover {
+    background-color: #35bf22;
+}
+
+.btn-icon:focus {
+    background-color: #35bf22;
+}
+
+.btn-icon--pressed {
+    background-color: #01B075;
+}
+
+.btn-icon .icon-left {
+    padding-right: 8px;
+}
+
+.btn-icon-right {
+    padding: 0 12px;
+}
+
+.btn-seconds {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #111;
+    padding: 0 24px;
+    text-align: center;
+    border: 1px solid #bbb;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-seconds:hover {
+    background-color: #E9EBEE;
+}
+
+.btn-seconds:focus {
+    background-color: #E9EBEE;
+}
+
+.btn-seconds--pressed {
+    background-color: #01B075;
+}

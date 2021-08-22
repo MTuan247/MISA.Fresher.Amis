@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+    --border-color : #c7c7c7;
+    --primary-color : #4caf50;
+    --focus-color: #4caf50;
+    --error-color: #FF4747;
+    --active-color: #4caf50;
+    --text-color: #111;
+    --input-height: 32px;
+}
+
+body {
+    font-family: Notosans-Regular;
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-color);
+}
+
+input {
+    font-family: Notosans-Regular;
+}
+
+.main {
+    display: flex;
+    height: calc(100vh - 48px);
+    width: 100%;
+}
+
+.router-view {
+    width: calc(100% - 220px);
+}
+
+.div-icon {
+    height: 24px;
+    width: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* width */
+::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../assets/font/GoogleSans-Regular.otf')
+}
+
+@font-face {
+    font-family: 'GoogleSans-Light';
+    src: url('../assets/font/GoogleSans-Light.otf')
+}
+
+@font-face {
+    font-family: 'GoogleSans-Thin';
+    src: url('../assets/font/GoogleSans-Thin.otf')
+}
+
+@font-face {
+    font-family: 'Notosans-Regular';
+    src: url('../assets/font/notosans-regular.2cb88a13.woff2');
+}
+
+@font-face {
+    font-family: 'Notosans-Bold';
+    src: url('../assets/font/notosans-bold.3ede5aff.woff2');
+}
+
+@font-face {
+    font-family: 'Notosans-Semibold';
+    src: url('../assets/font/notosans-semibold.df3e6dc4.woff2');
+}
+
+@font-face {
+    font-family: 'Notosans-Italic';
+    src: url('../assets/font/notosans-italic.1c1aaac9.woff2');
+}

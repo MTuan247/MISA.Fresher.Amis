@@ -1,0 +1,72 @@
+.mi {
+    background-image: url('../../assets/img/Sprites.64af8f61.svg');
+    background-repeat: no-repeat;
+}
+
+.mi-16 {
+    width: 16px;
+    height: 16px;
+}
+
+.mi-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.mi-48 {
+    width: 48px;
+    height: 48px;
+}
+
+.mi-three-stripes {
+    background-position: -843px -30px;
+}
+
+.mi-close {
+    background-position: -144px -144px !important;
+}
+
+.mi-16-close {
+    background-position: -1176px -360px !important;
+}
+
+.mi-refresh {
+    background-position: -423px -201px !important;
+}
+
+.mi-refresh:hover {
+    background-position: -1097px -88px !important;
+    background-color: unset !important;
+}
+
+.mi-warning {
+    background-position: -592px -456px !important;
+}
+
+.mi-alarm {
+    background-position: -746px -456px !important;
+}
+
+.mi-question {
+    background-position: -826px -456px !important;
+}
+
+.mi-24-error {
+    background-position: -760px -144px !important;
+}
+
+.mi-24-success {
+    background-position: -1600px -256px !important;
+}
+
+.mi-24-toggle-icon {
+    background-position: -424px -86px;
+}
+
+.mi-24-search {
+    background-position: -312px -144px !important;
+}
+
+.mi-16-arrow-down {
+    background-position: -1128px -360px !important;
+}
