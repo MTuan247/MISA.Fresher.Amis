@@ -1,0 +1,61 @@
+.tax-detail-table {
+    position: relative;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tax-detail-table .expand {
+    color: #b8bcc3;
+}
+
+.tax-detail-table .expand:hover {
+    color: #6b6c72;
+}
+
+.tax-detail-table.resizable {
+    border-top: 1px solid var(--border-color);
+    margin-top: 4px;
+    height: 200px;
+    flex-grow: 0;
+}
+
+.tax-detail-table.resizable .resizer {
+    display: block;
+}
+
+.tax-detail-table.resizable .grid-header {
+    padding-top: 12px;
+}
+
+.tax-detail-table .grid-header {
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 0;
+}
+
+.tax-detail-table .grid {
+    margin-top: 0;
+}
+
+.tax-detail-table .resizer {
+    display: none;
+    font-size: 20px;
+    position: absolute;
+    padding: 0 10px;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    cursor: s-resize;
+    /* cursor: url('../../../assets/icon/resize.png'), auto; */
+    background-image: url('../../../assets/icon/resize.png');
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+}
+
+.tax-detail-table .grid-header .expand {
+    font-size: 24px;
+}

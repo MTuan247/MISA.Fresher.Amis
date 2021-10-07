@@ -1,28 +1,4 @@
-.btn-default {
-    cursor: pointer;
-    background-color: #2ca01c;
-    border-radius: 4px;
-    font-size: 13px;
-    color: #fff;
-    padding: 0 24px;
-    text-align: center;
-    border: 0;
-    height: 36px;
-}
-
-.btn-base:focus {
-    outline: none;
-}
-
-.btn-default:hover {
-    background-color: #35bf22;
-}
-
-.btn-default--pressed {
-    background-color: #01B075;
-}
-
-.btn-icon {
+.btn-base {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,57 +8,54 @@
     font-size: 13px;
     color: #fff;
     padding: 0 16px;
-    text-align: left;
+    text-align: center;
     border: 0;
     height: 36px;
     user-select: none;
 }
 
-.btn-icon:hover {
+.btn-base:focus {
+    background-color: #35bf22;
+    outline: none;
+}
+
+.btn-base:hover {
     background-color: #35bf22;
 }
 
-.btn-icon:focus {
-    background-color: #35bf22;
-}
-
-.btn-icon--pressed {
+.btn-base--pressed {
     background-color: #01B075;
 }
 
-.btn-icon .icon-left {
+.btn-base.btn--disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.btn-base.btn-icon {
+    padding: 0 16px;
+}
+
+.btn-base.btn-icon .icon-left {
     padding-right: 8px;
 }
 
-.btn-icon-right {
+.btn-base.btn-icon .icon-right {
     padding: 0 12px;
 }
 
-.btn-seconds {
-    cursor: pointer;
+.btn-base.btn-seconds {
+    background-color: unset;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 4px;
-    font-size: 13px;
     color: #111;
-    padding: 0 24px;
-    text-align: center;
-    border: 1px solid #bbb;
-    height: 36px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid var(--border-color);
 }
 
-.btn-seconds:hover {
+.btn-base.btn-seconds:hover {
     background-color: #E9EBEE;
 }
 
-.btn-seconds:focus {
+.btn-base.btn-seconds:focus {
     background-color: #E9EBEE;
-}
-
-.btn-seconds--pressed {
-    background-color: #01B075;
 }

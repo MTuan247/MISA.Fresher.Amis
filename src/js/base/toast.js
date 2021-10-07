@@ -1,9 +1,10 @@
 import EventBus from '../../plugins/eventbus';
+import Resources from '../../resources';
 
 export function showErrorToast() {
     EventBus.$emit('appendToast', {
         type: 'error',
-        message: 'Có lỗi xảy ra! Vui lòng liên hệ MISA.'
+        message: Resources.messages.exception,
     })
 }
 

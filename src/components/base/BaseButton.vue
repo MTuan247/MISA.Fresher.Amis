@@ -3,12 +3,13 @@
     class="btn-base" 
     ref="Button"
     :tabindex="tabindex" 
-    :class="btnClass" 
+    :class="[btnClass, { 'btn--disabled' : isDisabled}]" 
     :id="id" 
     @click="handleEvent" 
     @keydown.enter="handleEvent"
-    v-tooltip.bottom="{content: hoverTitle, classes: ['btn-tooltip', tooltipClass], delay: { show: 300 }}"
+    v-tooltip.bottom="{content: hoverTitle, classes: ['btn-tooltip', tooltipClass]}"
   >
+    <slot name="icon"></slot>
     <div v-if="title" >{{title}}</div>
   </div>
 </template>

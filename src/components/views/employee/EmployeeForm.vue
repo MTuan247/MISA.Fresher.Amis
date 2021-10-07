@@ -4,24 +4,15 @@
         tabindex="0" 
         @keydown.ctrl.shift.83.exact.prevent.stop="submitForm('Save-Add')" 
         @keydown.ctrl.83.exact.prevent.stop="submitForm('Save')"
-        @keydown.esc.exact.prevent="hideForm"
+        @keydown.esc.exact.prevent="closeForm"
     >
         <BaseSpinner :isLoading="isLoading" backgroundColor="rgba(0,0,0,0.5)" />
-        <div class="info-form">
+        <div class="info-form employee-form">
             <div class="form__header flex flex-align-center">
                 <h1 class="text-heading notosans-bold">Thông tin nhân viên</h1>
-                <v-checkbox
-                    class="v-checkbox"
-                    label="Là khách hàng"
-                    hide-details
-                ></v-checkbox>
-                <v-checkbox
-                    class="v-checkbox"
-                    label="Là nhà cung cấp"
-                    hide-details
-                ></v-checkbox>
                 <div v-tooltip.bottom="{ content: 'Close (ESC)', classes: ['btn-tooltip'], delay: { show: 300 }}" 
-                    class="close mi mi-24 mi-close" @click="this.closeForm"
+                    class="close mi mi-24 mi-close" 
+                    @click="closeForm"
                 ></div>
             </div>
             <div action="" class="form__body">
@@ -31,27 +22,27 @@
                             <div id="code-input" class="form__field-input">
                                 <BaseInput 
                                     ref="EmployeeCode"
-                                    inputLabel="Mã"
+                                    inputLabel="Mã nhân viên"
                                     tabindex="1"
                                     :required="true"
-                                    :modelValue="this.data['EmployeeCode'] | formatNull"
                                     :inputMaxlength="20"
-                                    @update="setData($event,'EmployeeCode')"
-                                    @setValid="setValid($event,'EmployeeCode')"
-                                    @keydown.native.shift.tab.exact.prevent="$refs.SubmitAndAdd.$refs.Button.focus()"
+                                    :value="this.data['EmployeeCode'] | formatNull"
+                                    @input="setData($event,'EmployeeCode')"
+                                    @validate="setValid($event,'EmployeeCode')"
+                                    @keydown.native.shift.tab.exact.prevent="$refs.Cancel.$refs.Button.focus()"
                                 />
                             </div>
 
                             <div class="form__field-input">
                                 <BaseInput
                                     ref="EmployeeName"
-                                    inputLabel="Tên"
+                                    inputLabel="Họ và tên"
                                     tabindex="2"
                                     :inputMaxlength="100"
                                     :required="true"
-                                    :modelValue="this.data['EmployeeName'] | formatNull"
-                                    @update="setData($event,'EmployeeName')"
-                                    @setValid="setValid($event,'EmployeeName')"
+                                    :value="this.data['EmployeeName'] | formatName | formatNull"
+                                    @input="setData($event,'EmployeeName')"
+                                    @validate="setValid($event,'EmployeeName')"
                                 />
                             </div>
 
@@ -64,8 +55,9 @@
                                     fieldName="DepartmentName"
                                     fieldValue="DepartmentId"
                                     tabindex="3"
-                                    :api="departmentApi"
-                                    @setValid="setValid($event,'Department')"
+                                    @validate="setValid($event,'Department')"
+                                    :extraData="departmentItems"
+                                    :required="true"
                                 />
                             </div>
 
@@ -75,8 +67,8 @@
                                     inputLabel="Chức danh"
                                     tabindex="4"
                                     :inputMaxlength="100"
-                                    :modelValue="this.data['EmployeePosition'] | formatNull"
-                                    @update="setData($event,'EmployeePosition')"
+                                    :value="this.data['EmployeePosition'] | formatNull"
+                                    @input="setData($event,'EmployeePosition')"
                                 />
                             </div>
 
@@ -99,10 +91,10 @@
 
                             <div id="gender-input" class="v-input-radio form__field-input">
                                 <div class="label">Giới tính</div>
-                                <v-radio-group row v-model="data.Gender">
-                                    <v-radio tabindex="6" label="Nam" :value="0"></v-radio>
-                                    <v-radio tabindex="7" label="Nữ" :value="1"></v-radio>
-                                    <v-radio tabindex="8" label="Khác" :value="2"></v-radio>
+                                <v-radio-group mandatory row v-model="data.Gender">
+                                    <v-radio tabindex="6" label="Nam" :value="$enums.Gender.Male"></v-radio>
+                                    <v-radio tabindex="7" label="Nữ" :value="$enums.Gender.Female"></v-radio>
+                                    <v-radio tabindex="8" label="Khác" :value="$enums.Gender.Other"></v-radio>
                                 </v-radio-group>
                             </div>
 
@@ -110,12 +102,13 @@
                                 <BaseInput
                                     ref="IdentityNumber"
                                     inputLabel="Số CMTND/ Căn cước"
-                                    pattern="^[0-9]{9,15}$"
                                     tabindex="9"
+                                    pattern="^[0-9]{9,}$"
+                                    inputType="number"
                                     :inputMaxlength="25"
-                                    :modelValue="this.data['IdentityNumber'] | formatNull"
-                                    @update="setData($event,'IdentityNumber')"
-                                    @setValid="setValid($event,'IdentityNumber')" 
+                                    :value="this.data['IdentityNumber'] | formatNull"
+                                    @input="setData($event,'IdentityNumber')"
+                                    @validate="setValid($event,'IdentityNumber')"
                                 />
                             </div>
 
@@ -137,15 +130,15 @@
                                     inputLabel="Nơi cấp"
                                     tabindex="11"
                                     :inputMaxlength="255"
-                                    :modelValue="this.data['IdentityPlace'] | formatNull"
-                                    @update="setData($event,'IdentityPlace')" 
+                                    :value="this.data['IdentityPlace'] | formatNull"
+                                    @input="setData($event,'IdentityPlace')" 
                                 />
                             </div>
 
                         </div>
                     </div>
 
-                    <div class="flex flex-column" style="margin-top: 24px;">
+                    <div class="flex flex-column" style="margin-top: 15px;">
                         <div class="form__input full-width">
                             <div class="form__field-input full-width">
                                 <BaseInput 
@@ -153,81 +146,85 @@
                                     inputLabel="Địa chỉ"
                                     tabindex="12"
                                     :inputMaxlength="255"
-                                    :modelValue="this.data['Address'] | formatNull"
-                                    @update="setData($event,'Address')"
+                                    :value="this.data['Address']"
+                                    @input="setData($event,'Address')"
                                 />
                             </div>
 
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="PhoneNumber"
                                     inputLabel="Điện thoại di động"
-                                    pattern="^[0-9\-\+]{9,15}$"
                                     tabindex="13"
+                                    pattern="^[0-9]{9,}$"
+                                    inputType="number"
                                     :inputMaxlength="50"
-                                    :modelValue="this.data['PhoneNumber'] | formatNull"
-                                    @update="setData($event,'PhoneNumber')"
-                                    @setValid="setValid($event,'PhoneNumber')" 
+                                    :value="this.data['PhoneNumber'] | formatNull"
+                                    @input="setData($event,'PhoneNumber')"
+                                    @validate="setValid($event,'PhoneNumber')"
                                 />
                             </div>
 
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="TelephoneNumber"
                                     inputLabel="Điện thoại cố định"
-                                    pattern="^[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8,10}$"
                                     tabindex="14"
+                                    pattern="^[0-9]{9,}$"
+                                    inputType="number"
                                     :inputMaxlength="50"
-                                    :modelValue="this.data['TelephoneNumber'] | formatTel | formatNull"
-                                    @update="setData($event,'TelephoneNumber')"
-                                    @setValid="setValid($event,'TelephoneNumber')" 
+                                    :value="this.data['TelephoneNumber'] | formatNull"
+                                    @input="setData($event,'TelephoneNumber')"
+                                    @validate="setValid($event,'TelephoneNumber')"
                                 />
                             </div>
 
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="Email"
                                     inputLabel="Email"
-                                    inputType="email"
                                     tabindex="15"
+                                    inputType="email"
                                     :inputMaxlength="100"
-                                    :modelValue="this.data['Email'] | formatNull"
-                                    @update="setData($event,'Email')"
-                                    @setValid="setValid($event,'Email')" 
+                                    :value="this.data['Email'] | formatNull"
+                                    @input="setData($event,'Email')"
+                                    @validate="setValid($event,'Email')"
                                 />
                             </div>
 
                         </div>
 
                         <div class="form__input full-width">
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="BankAccountNumber"
                                     inputLabel="Tài khoản ngân hàng"
                                     tabindex="16"
+                                    pattern="^[0-9]{6,}$"
+                                    inputType="number"
                                     :inputMaxlength="25"
-                                    :modelValue="this.data['BankAccountNumber'] | formatNull"
-                                    @update="setData($event,'BankAccountNumber')"
+                                    :value="this.data['BankAccountNumber'] | formatNull"
+                                    @input="setData($event,'BankAccountNumber')"
                                 />
                             </div>
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="BankName"
                                     inputLabel="Tên ngân hàng"
                                     tabindex="17"
                                     :inputMaxlength="255"
-                                    :modelValue="this.data['BankName'] | formatNull"
-                                    @update="setData($event,'BankName')"
+                                    :value="this.data['BankName'] | formatNull"
+                                    @input="setData($event,'BankName')"
                                 />
                             </div>
-                            <div class="form__field-input flex-grow-0 sub-input">
+                            <div class="form__field-input sub-input">
                                 <BaseInput 
                                     ref="BankBranchName"
                                     inputLabel="Chi nhánh"
                                     tabindex="18"
                                     :inputMaxlength="255"
-                                    :modelValue="this.data['BankBranchName'] | formatNull"
-                                    @update="setData($event,'BankBranchName')"
+                                    :value="this.data['BankBranchName'] | formatNull"
+                                    @input="setData($event,'BankBranchName')"
                                 />
                             </div>
                         </div>     
@@ -236,34 +233,35 @@
             </div>
             <div class="form__footer flex flex-justify-space-between flex-align-center">
                 <div class="footer-left flex flex-grow-0">
-                    <BaseButton 
-                        id="cancel"
-                        btnClass="btn-seconds"
-                        title="Hủy"
-                        tabindex="19"
-                        :clickEvent="this.hideForm"
-                    />
+                    
                 </div>
                 <div class="footer-right flex flex-grow-0">
                     <BaseButton 
-                        id="save"
+                        id="cancel"
+                        ref="Cancel"
                         btnClass="btn-seconds"
+                        title="Hủy"
+                        tabindex="21"
+                        :clickEvent="this.hideForm"
+                        @keydown.native.tab.exact.prevent="$refs.EmployeeCode.$refs.Input.focus()"
+                    />
+                    <BaseButton 
+                        id="save"
+                        btnClass="btn-base"
                         hoverTitle="Cất (Ctrl + S)"
-                        title="Cất"
-                        tabindex="20"
+                        title="Lưu"
+                        tabindex="19"
                         :clickEvent="() => submitForm('Save')"
                     />
-
+<!-- 
                     <BaseButton 
                         id="submit"
                         ref="SubmitAndAdd"
-                        btnClass="btn-icon"
                         title="Cất và thêm"
                         hoverTitle="Cất và thêm (Ctrl + Shift + S)"
-                        tabindex="21"
+                        tabindex="20"
                         :clickEvent="() => submitForm('Save-Add')"
-                        @keydown.native.tab.exact.prevent="$refs.EmployeeCode.$refs.Input.focus()"
-                    />
+                    /> -->
                 </div>
                 
             </div>
@@ -273,17 +271,19 @@
 
 <script>
 
-    import { formatNull, formatPhoneNumber } from '../../../js/common/format'
-    import EmployeeApi from '../../../js/api/employee/EmployeeApi'
+    import { formatName, formatNull } from '../../../js/common/format'
+    import EmployeeApi from '../../../js/api/employee/employee-api'
 
     import BaseButton from '../../base/BaseButton.vue'
     import BaseInput from '../../base/BaseInput.vue'
     import BaseSpinner from '../../base/BaseSpinner.vue'
     import BaseDatePick from '../../base/BaseDatePick.vue'
     import BaseVCombobox from '../../base/BaseVCombobox.vue'
+    import {EmployeeStore} from './store'
+    import {Store} from '../store.js'
 
     import Vue from 'vue'
-    import { showAlarmPopup } from '../../../js/base/popup'
+    // import { showAlarmPopup } from '../../../js/base/popup'
 
     export default {
         name: 'EmployeeForm',
@@ -310,12 +310,18 @@
 
                 data: {},
                 valids: [],
-                formatDate: localStorage.formatDate,
-                departmentApi: EmployeeApi.departmentApi,
+                formatDate: Store.state.formatDate,
                 department: null,
                 oldData: {},
                 isLoading: false,
                 afterClose: () => {},
+                
+            }
+        },
+        computed: {
+            // Lây danh sách department
+            departmentItems() {
+                return EmployeeStore.state.department;
             }
         },
 
@@ -328,14 +334,15 @@
             formatNull: function(value) {
                 return formatNull(value)
             },
-
+            
             /**
-             * Filter số điện thoại cố định
-             * @author: NMTuan (22/08/2021)
+             * Filter giá trị tên, tự động viết hoa chữ cái đầu
+             * @author: NMTuan (30/08/2021)
              */
-            formatTel: function(value) {
-                return formatPhoneNumber(value)
-            }
+            formatName: function(value) {
+                return formatName(value)
+            },
+
 
         },
         //#endregion
@@ -370,11 +377,10 @@
                 this.oldData = JSON.parse(JSON.stringify(this.data))
                 this.isLoading = false
             }
-
         },
 
         /**
-         * Hàm xử khi khởi tạo xong, autofocus vào trường employeeCode
+         * Hàm xử khi khởi tạo xong
          * @author: NMTuan (20/07/2021)
          */
         mounted: function() {
@@ -441,10 +447,11 @@
             async setForm(response) {
                 for (let field in response) {
                     let val = response[field]
-                    if(val == null) val = ''
+                    // if(val == null) val = ''
                     Vue.set(this.data, field, val)
                 }
                 if (this.formState == 'Add') {
+                    Vue.set(this.data, 'EmployeeCode', null)
                     Vue.set(this.data, 'EmployeeCode', await EmployeeApi.getNewCode())
                 }
             },
@@ -465,7 +472,6 @@
                     //Nếu là cất thì đóng form và load lại trang
                     if (state == 'Save') {
                         success = () => {
-                            this.$eventBus.$emit('refresh')
                             this.hideForm()
                         }
                     //Nếu là cất và thêm thì submit form, đưa trạng thái form về thêm, lấy code mới
@@ -489,9 +495,15 @@
                     
                     //Kiểm tra trạng thái của form là Add hay Update rồi submit
                     if(this.formState == 'Update') {
-                        this.updateData(() => success());
+                        this.updateData(() => {
+                            success();
+                            this.$eventBus.$emit('loadData');
+                        });
                     } else {
-                        this.addNewData(() => success());
+                        this.addNewData(() => {
+                            success();
+                            this.$eventBus.$emit('refresh');
+                        });
                     }
                 }
                 
@@ -501,8 +513,8 @@
              * Gán các giá trị từ các trường tương ứng
              * @author: NMTuan (20/07/2021)
              */
-            setData($event, fieldName) {
-                Vue.set(this.data, fieldName, $event)
+            setData(value, fieldName) {
+                Vue.set(this.data, fieldName, value)
             },
 
             /**
@@ -522,7 +534,6 @@
                 if (data.DepartmentId == undefined) {
                     data.DepartmentId = null
                 }
-                data.TelephoneNumber = data.TelephoneNumber.replace(/\D/g, '');
             },
 
             /**
@@ -560,6 +571,8 @@
                 EmployeeApi.update(this.data, this.entityId, () => {
                     success();
                 }, (response) => {
+                    // this.$refs[response.Data].tooltipMessage = response.UserMsg;
+                    // this.$refs[response.Data].isValid = false;
                     this.$refs[response.Data].$refs.Input.focus()
                 }, () => {
                     this.isLoading = false;
@@ -582,13 +595,17 @@
                 //Blur qua các ô input
                 this.refs.forEach(item => {
                     this.$refs[item].inputFocusoutEvent()
+                    if(this.valids[item] == false) {
+                        this.$refs[item].showTooltip()
+                    }
                 })
                 //Kiểm tra có trường bị sai
                 for (let valid in this.valids) {
                     if (!this.valids[valid]) {
-                        showAlarmPopup(this.$refs[valid].tooltipMessage, () => {
-                            this.$refs[valid].$refs.Input.focus()
-                        })
+                        // showAlarmPopup(this.$refs[valid].tooltipMessage, () => {
+                        //     this.$refs[valid].$refs.Input.focus()
+                        // })
+                        this.$refs[valid].$refs.Input.focus()
                         return false;
                     }
                 }
@@ -600,5 +617,6 @@
 </script>
 
 <style scoped>
-@import '../../../css/base/form.css';
+@import '../../../css/base/detail.css';
+@import '../../../css/views/employee/form.css';
 </style>

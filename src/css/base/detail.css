@@ -1,5 +1,5 @@
 .modal {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
     /* display: none; */
     position: absolute;
     top: 0;
@@ -8,10 +8,6 @@
     bottom: 0;
     /* padding: 5px 0; */
     z-index: 999;
-}
-
-.modal ::-webkit-scrollbar {
-    width: 2px;
 }
 
 /* .modal ::-webkit-scrollbar-track {
@@ -30,10 +26,6 @@
     position: relative;
 }
 
-.info-form:hover {
-    box-shadow: 2px 2px 5px var(--border-color);
-}
-
 /*
 *
 *  CSS Header of form
@@ -43,10 +35,8 @@
 
 .info-form .close {
     position: absolute;
-    /* right: 12px;
-    top: 18px; */
     right: 12px;
-    top: 12px;
+    /* top: 12px; */
     cursor: pointer;
 }
 
@@ -55,9 +45,9 @@
     top: 0px;
     background-color: #fff;
     z-index: 10;
-    padding: 20px 32px 20px 32px;
+    padding: 15px 15px 15px 15px;
     font-weight: 700;
-    height: 60px;
+    height: 50px;
 }
 
 
@@ -67,10 +57,12 @@
 
 .info-form .form__body {
     display: flex;
-    padding: 24px;
-    padding-top: 0px;
-    overflow: auto;
-    max-height: calc(100vh - 135px);
+    padding: 0 7px;
+    /* padding-top: 0px; */
+    padding-bottom: 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 110px);
 }
 
 .info-form .label {
@@ -93,26 +85,14 @@
 
 .info-form .form__field-input {
     margin-left: 8px;
-    margin-top: 12px;
+    margin-top: 16px;
     flex-grow: 1;
-}
-
-.info-form #code-input {
-    width: 150px;
-}
-
-.info-form #gender-input {
-    margin-left: 16px;
-}
-
-.info-form .mx-datepicker,
-.info-form .date-input {
-    width: 150px !important;
 }
 
 /* Set width cho input ngắn */
 .info-form .sub-input {
-    width: calc(25% - 6px);
+    /* width: calc(25% - 6px); */
+    flex-grow: 1;
 }
 
 /* 
@@ -124,17 +104,18 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 75px;
-    margin: 0 32px;
+    /* height: 75px; */
+    padding: 10px 0;
+    margin: 0 15px;
 }
 
 .info-form .form__footer #cancel,
 .info-form .form__footer #submit,
 .info-form .form__footer #save {
     margin-left: 16px;
-    width: 75px;
-    height: 36px;
+    /* width: 75px; */
     /* padding: 0 16px; */
+    width: 90px;
 }
 
 .info-form .form__footer #cancel {

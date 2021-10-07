@@ -1,6 +1,23 @@
 .mi {
-    background-image: url('../../assets/img/Sprites.64af8f61.svg');
+    /* background-image: url('../../assets/img/Sprites.64af8f61.svg'); */
+    background-image: url("../../assets/img/Sprites.Custom.svg") !important;
     background-repeat: no-repeat;
+}
+
+.delete i {
+    color: #FF4477 !important;
+}
+
+.add i {
+    color: #4caf50 !important;
+}
+
+.edit i {
+    color: #0066ff !important;
+}
+
+.copy i {
+    color: #00ff00 !important;
 }
 
 .mi-16 {
@@ -9,8 +26,8 @@
 }
 
 .mi-24 {
-    width: 24px;
-    height: 24px;
+    width: 24px !important;
+    height: 24px !important;
 }
 
 .mi-48 {
@@ -22,11 +39,11 @@
     background-position: -843px -30px;
 }
 
-.mi-close {
+.mi-24.mi-close {
     background-position: -144px -144px !important;
 }
 
-.mi-16-close {
+.mi-16.mi-close {
     background-position: -1176px -360px !important;
 }
 
@@ -69,4 +86,49 @@
 
 .mi-16-arrow-down {
     background-position: -1128px -360px !important;
+}
+
+.mi-16.mi-pen {
+    background-position: -416px -312px;
+}
+
+.mi-24.mi-pen {
+    background-position: -1432px -88px !important;
+}
+
+.mi-24.mi-pen:hover {
+    background-position: -1656px -88px !important;
+}
+
+.mi-trash {
+    background-position: -464px -312px !important;
+}
+
+.mi-copy {
+    background-image: url('../../assets/icon/copy-svgrepo-com.svg');
+    background-repeat: no-repeat;
+}
+
+.mi-24-trash {
+    background-image: url('../../assets/icon/delete_black_24dp-faint.svg');
+}
+
+.mi-24-trash:hover {
+    background-image: url('../../assets/icon/delete_black_24dp-bold.svg');
+}
+
+.mi-settings {
+    background-position: -144px -32px !important;
+}
+
+.mi-settings:hover {
+    background-position: -675px -30px !important;
+}
+
+.mi-tax {
+    background-position: -423px -1630px !important;
+}
+
+.router-link-exact-active .mi-tax {
+    background-position:  -423px -1587px !important;
 }

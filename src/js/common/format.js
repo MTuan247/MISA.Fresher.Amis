@@ -1,17 +1,34 @@
+import {Store} from '../../components/views/store'
+
 /* 
 * Hàm format các giá trị null
 * Author: NMTuan (05/07/2021)
 */
 export function formatNull(value) {
-    if (!value) return "";
+    if (value == null || value == undefined) return "";
     return value;
+}
+
+/**
+ * Hàm format tên tự động viết hóa chữ cái đầu
+ * @author: NMTuan (20/08/2021)
+ */
+export function formatName(value) {
+    if (!value) return null;
+    value = value.trim();
+    let arrayStr = value.split(' ');
+    let result = [];
+    arrayStr.forEach((string) => {
+        result.push(string.charAt(0).toUpperCase() + string.slice(1));
+    })
+    return result.join(' ')
 }
 
 /**
  * Hàm format các giá trị date
  * Author: NMTuan (05/07/2021) 
  * Modified By: NMTuan (05/08/2021)
- * @param {*} value 
+ * @param {Date} value YYYY-MM-DD, YYYY/MM/DD, Date Format
  * @returns 
  */
 export function formatDate(value, format = 'dd/mm/yyyy') {
@@ -52,16 +69,35 @@ export function formatDate(value, format = 'dd/mm/yyyy') {
 }
 
 /**
+ * Hàm format giá trị tiền tệ
+ * @author: NMTuan (05/07/2021)
+ * @param {*} value 
+ * @returns 
+ */
+export function formatMoney(value) {
+    if (!value) return 0;
+    value = value.toString()
+    value = value.replaceAll('.','')
+    value = value.replaceAll(',','')
+    return Number(value).toLocaleString('it-IT');
+}
+
+/**
  * Hàm format tổng hợp
  * Author: NMTuan (05/07/2021)
  * @param {*} value 
  * @param {*} fieldName 
  * @returns 
  */
-function formatData(value, fieldName) {
+function formatData(value, fieldName, type) {
     let rs = value
     if (fieldName == "DateOfBirth") {
-        rs = formatDate(rs, localStorage.formatDate)
+        rs = formatDate(rs, Store.state.formatDate)
+    }
+    if (type == "Date") {
+        rs = formatDate(rs, Store.state.formatDate)
+    } else if (type == 'Money') {
+        rs = formatMoney(rs)
     }
     rs = formatNull(rs)
     return rs;
@@ -108,6 +144,31 @@ function removeAccents(str) {
         str = str.replace(re, char);
     }
     return str;
+}
+
+/**
+ * Hàm format date oninput
+ * @author: NMTuan (08/09/2021)
+ * @param {String} value date
+ * @returns 
+ */
+export function formatDateOnInput(value, format = "dd/mm/yyyy") {
+    format = format.split('/')
+    let regFirstSeparator = `^([0-9]{${format[0].length}})([0-9]{1,${format[1].length}})$`
+    let regComplete = `^([0-9]{${format[0].length}})([0-9]{${format[1].length}})([0-9]{1,${format[2].length}})$`
+    // const REG_DATE_FIRST_SEPARATOR = /^(\d{2})(\d{1,2})$/
+    // const REG_DATE_COMPLETE = /^(\d{2})(\d{2})(\d{1,4})$/
+    const REG_DATE_FIRST_SEPARATOR = new RegExp(regFirstSeparator);
+    const REG_DATE_COMPLETE = new RegExp(regComplete)
+    var cleaned = ('' + value).replace(/\D/g, '');
+    var matchDateOnFirstSeparator = cleaned.match(REG_DATE_FIRST_SEPARATOR)
+    var matchDateFormat = cleaned.match(REG_DATE_COMPLETE)
+    if (matchDateOnFirstSeparator) {
+        return matchDateOnFirstSeparator[1] + '/' + matchDateOnFirstSeparator[2]
+    } else if (matchDateFormat) {
+        return matchDateFormat[1] + '/' + matchDateFormat[2] + '/' + matchDateFormat[3]
+    }
+    return cleaned;
 }
 
 export { formatData, removeAccents}

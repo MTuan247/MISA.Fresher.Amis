@@ -1,0 +1,28 @@
+
+.modal .employee-popup {
+    position: fixed;
+    z-index: 10;
+    top: -10px;
+    bottom: -10px;
+    left: -150px;
+    right: -150px;
+    margin: auto;
+    padding: 0px 12px 12px 12px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+}
+
+.modal .employee-popup .employee-header__content {
+    padding: 12px 0;
+}
+
+.modal .employee-popup .employee-footer {
+    margin-top: 8px;
+}
+
+.modal .employee-popup .btn-employee-control {
+    margin-left: 8px;
+    width: 90px;
+}

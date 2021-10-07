@@ -8,6 +8,7 @@
         :formState='formState'
       />
     </transition>
+    <EmployeeSettings />
     <BaseToastContainer />
     <BasePopup 
       v-if="popup['isShow']"
@@ -21,7 +22,7 @@
       :subConfirm="popup['subConfirm']"
       :cancel="popup['cancel']"
     />
-    
+    <BaseContextMenu />
     <EmployeeContent 
       :isContentCollapse="isContentCollapse"
       ref="EmployeeContent"
@@ -29,7 +30,6 @@
       @closeModal='closeModal'
       :modalShow='modalShow'
     />
-    <!-- </div> -->
   </div>
 </template>
 
@@ -38,6 +38,11 @@ import EmployeeContent from "./EmployeeContent.vue";
 import EmployeeForm from "./EmployeeForm.vue"
 import BasePopup from "../../base/BasePopup"
 import BaseToastContainer from '../../base/BaseToastContainer.vue';
+import BaseContextMenu from '../../base/BaseContextMenu.vue'
+import EmployeeApi from '../../../js/api/employee/employee-api';
+import EmployeeSettings from './EmployeeSettings.vue'
+import axios from 'axios';
+import {EmployeeStore} from './store'
 
 export default {
   name: "Employee",
@@ -47,11 +52,24 @@ export default {
     EmployeeForm,
     BasePopup,
     BaseToastContainer,
+    BaseContextMenu,
+    EmployeeSettings
   },
   created() {
-    localStorage.formatDate = "DD/MM/YYYY"
     this.$eventBus.$on('openModal', this.openModal)
     this.$eventBus.$on('showPopup', this.showPopup)
+    // Lấy dữ liệu department
+    axios.get(EmployeeApi.departmentApi)
+    .then((response) => {
+        EmployeeStore.state.department = [];
+        response.data.forEach(item => {
+            let object = {}
+            object['text'] = item['DepartmentName']
+            object['value'] = item['DepartmentId']
+            EmployeeStore.state.department.push(object)
+        });
+    })
+    
   },
   destroyed() {
     this.$eventBus.$off('openModal', this.openModal);
@@ -59,6 +77,8 @@ export default {
   },
   data() {
     return {
+      store: EmployeeStore.state,
+      department: [],
       modalShow: false,
       entityId: null,
       formState: '',

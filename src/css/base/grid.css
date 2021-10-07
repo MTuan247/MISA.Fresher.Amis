@@ -1,6 +1,7 @@
 
 /* grid CSS */
 .grid {
+    --row-height: 42px;
     /* height: calc(100vh - 325px); */
     overflow: auto;
     margin-top: 16px;
@@ -9,6 +10,38 @@
     flex-grow: 1;
     flex-basis: 0px;
     /* margin: 0 16px; */
+    position: relative;
+}
+
+.grid .grid-wrapper {
+    min-height: calc(100% - var(--row-height));
+}
+
+.grid .no-content {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.grid .no-content .no-content-img {
+    width: 100%;
+    height: 76px;
+    background-position: center;
+    background-image: url('../../assets/img/bg_report_nodata.76e50bd8.svg');
+}
+
+.grid .no-content .no-content-msg {
+    padding-top: 12px;
+    z-index: 6;
+    font-weight: 500;
+    color: #BABDC4;
 }
 
 .grid .text-align-center {
@@ -25,14 +58,8 @@
     z-index: 1;
 }
 
-.grid th.sticky {
-    z-index: 3;
-}
-
 .grid::-webkit-scrollbar-track {
-    margin-top: 36px;
-    /* margin-left: 390px;
-    margin-right: 100px; */
+    margin-top: var(--row-height);
 }
 
 .grid::-webkit-scrollbar {
@@ -46,67 +73,64 @@
     overflow: auto;
 }
 
+.grid th.sticky {
+    z-index: 3;
+}
+
 .grid th,td {
-    height: 36px;
+    height: var(--row-height);
     margin: 0;
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
     padding: 0 10px;
-    border-bottom: 1px solid #c7c7c7;
-    font-size: 12px;
-}
-
-.grid th:last-child {
-    border-left: 1px solid #c7c7c7;
-}
-
-.grid tr td:last-child {
-    border-left: 1px dotted #c7c7c7;
-}
-
-.grid tr th:nth-last-child(2),
-.grid tr td:nth-last-child(2) {
-    border-right: none;
+    border-bottom: 1px solid rgba(199, 199, 199, 0.5);
+    font-size: 13px;
 }
 
 .grid th {
-    text-transform: uppercase;
     position: sticky;
     top: 0;
-    background-color: white;
     z-index: 2;
     text-align: left;
-    cursor: pointer;
+    cursor: default;
     background-color: #eceef1;
-    border-right: 1px solid #c7c7c7;
 }
 
 .grid td {
-    color: #111;
-    border-right: 1px dotted #c7c7c7;
+    line-height: calc(var(--row-height) - 2px);
     background-color: #fff;
 }
 
-.grid table tr:hover td {
-    background-color: #EBF9F4;
+.grid td .cell-text {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    display: block;
 }
 
-.grid table tr:hover .v-btn {
-    background-color: #EBF9F4 !important;
+.grid tr.selected:hover td,
+.grid tr.selected td {
+    background-color: #dfdede;
 }
 
-.grid .check-box {
-    text-align: center;
-    /* position: relative; */
+.grid tr:hover td {
+    background-color: #f3f8f8;
 }
 
-.grid .check-box input {
+.grid .btn-row-control {
+    margin: 0 5px;
+}
+
+.grid .btn-row-control i {
+    font-size: 16px;
+}
+
+.grid .check-box .input {
     position: absolute;
-    /* top: 14px;
-    left: 18px; */
     top: 50%;
     transform: translateY(-50%) translateX(-50%);
+    background-color: #fff;
     left: 50%;
     width: 20px;
     height: 20px;
@@ -116,32 +140,70 @@
 
 .grid .custom-checkbox {
     position: absolute;
-    /* top: 14px;
-    left: 18px; */
     top: 50%;
     transform: translateY(-50%) translateX(-50%);
     left: 50%;
     width: 20px;
     height: 20px;
-    border: 1px solid #bbb;
+    border: 1px solid var(--border-color);
+    background-color: #fff !important;
     border-radius: 2px;
 }
 
-.grid .custom-checkbox--selected {
+.grid tr.selected .custom-checkbox {
     border-color: #2ca01c;
     background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat;
     background-position: -1224px -360px;
 }
 
-.grid .custom-checkbox i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    left: 50%;
-    display: none;
-    color: #2ca01c;
+.grid .table-summary,
+.grid tfoot {
+    z-index: 5;
+    position: sticky;
+    bottom: -1px;
+    font-weight: 600;
 }
 
-.grid .custom-checkbox--selected i {
+.grid .table-summary tr:hover td,
+.grid .table-summary td {
+    background-color: #eceef1;
+}
+
+/** Custom Component trong Table **/
+
+.grid .mx-datepicker {
+    width: 100%;
+}
+
+.grid .mx-datepicker .mx-icon-clear,
+.grid .mx-datepicker .mx-icon-calendar {
     display: none;
+}
+
+.grid .mx-datepicker .mx-input-wrapper input:focus,
+.grid .mx-datepicker .mx-input-wrapper input {
+    border: none;
+    text-align: center;
+    background-color: unset;
+    height: calc(var(--row-height) - 1px);
+    padding: unset;
+    padding-left: unset;
+    padding-right: unset;
+    line-height: unset;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.grid .v-autocomplete.v-input--is-focused .v-input__slot,
+.grid .v-autocomplete.v-input--is-error .v-input__slot,
+.grid .v-autocomplete .v-input__slot {
+    border: none !important;
+    background-color: unset !important;
+    min-width: unset;
+    height: calc(var(--row-height) - 1px) !important;
+    min-height: unset !important;
+}
+
+.grid .v-autocomplete .v-input__control {
+    height: calc(var(--row-height) - 1px) !important;
 }

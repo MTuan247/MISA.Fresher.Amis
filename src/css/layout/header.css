@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     height: 48px;
-    width: 200px;
+    width: 180px;
     border-right: 1px solid #e5e5e5;
 }
 
@@ -74,4 +74,16 @@
 .header .header-title .dropdown-icon{
     padding-top: 1px;
     margin-left: 16px;
+}
+
+.header .year-combobox {
+    margin-left: 16px;
+    height: 32px;
+}
+
+.header .year-combobox .v-input__slot {
+    width: 120px;
+    min-width: 120px;
+    min-height: 32px;
+    height: 32px;
 }

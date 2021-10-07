@@ -1,7 +1,7 @@
 <template>
   <div data-app=true id="app">
     <div>
-      <TheHeader />
+      <TheHeader :key="$router.currentRoute.path" />
       <div class="main">
         <TheNavbar :isCollapsed="isContentCollapsed" />
         <router-view :isContentCollapse="isContentCollapsed" />
@@ -29,6 +29,7 @@ export default {
 
 <style>
 @import '../lib/fontawesome-5.15.1/css/all.min.css';
+@import '../lib/fontawesome-pro-5.0.13/css/all.css';
 @import './css/main.css';
 @import './css/common/common.css';
 @import './css/common/text.css';
@@ -38,4 +39,5 @@ export default {
 @import './css/base/vtab.css';
 @import './css/base/vmenu.css';
 @import './css/base/vcheckbox.css';
+@import './css/base/checkbox.css';
 </style>

@@ -3,20 +3,21 @@
         <div tabindex="0" ref="Popup" @keydown.enter="confirmPopup" class="popup" :class="classType" >
             <div class="popup__header">
                 <div class="popup__title">{{title}}</div>
+                <div class="mi mi-24 mi-close close pointer" @click="closePopup"></div>
             </div>
             <div class="popup__body">
-                <div class="popup__icon mi mi-48" :class="iconClass"></div>
-                <div class="popup__content">
-                    {{message}}
+                <!-- <div class="popup__icon mi mi-48" :class="iconClass"></div> -->
+                <div v-html="message" class="popup__content">
                 </div>
             </div>
             <div class="popup__footer flex flex-justify-space-evenly flex-align-center">
-                <div v-if="cancel" class="popup__footer-left flex flex-align-center">
-                    <div class="btn-seconds cancel" @click="closePopup" >{{cancel}}</div>
+                <div class="popup__footer-left flex flex-align-center">
+                    <div v-if="cancel && subConfirm" class="popup__btn btn-base btn-seconds cancel" @click="closePopup" >{{cancel}}</div>
                 </div>
                 <div class="popup__footer-right flex flex-align-center">
-                    <div v-if="subConfirm" class="btn-seconds sub-confirm" @click="subConfirmPopup" >{{subConfirm}}</div>
-                    <div class="btn-default confirm" @click="confirmPopup" >{{confirm}}</div>
+                    <div v-if="subConfirm" class="popup__btn btn-base btn-seconds sub-confirm" @click="subConfirmPopup" >{{subConfirm}}</div>
+                    <div v-if="cancel && !subConfirm" class="popup__btn btn-base btn-seconds cancel" @click="closePopup" >{{cancel}}</div>
+                    <div class="popup__btn btn-base btn-icon confirm" @click="confirmPopup" >{{confirm}}</div>
                 </div>
             </div>
         </div>
@@ -32,7 +33,7 @@
             },
 
             title: {
-                default: ''
+                default: 'Xác nhận'
             },
 
             message: {

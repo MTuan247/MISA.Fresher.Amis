@@ -1,0 +1,13 @@
+.employee-form #code-input {
+    width: 150px;
+}
+
+.employee-form #gender-input {
+    margin-left: 16px;
+}
+
+
+.employee-form .mx-datepicker,
+.employee-form .date-input {
+    width: 175px !important;
+}

@@ -7,76 +7,103 @@
             <BaseButton
                 id="add-employee"
                 btnClass="btn-icon"
-                title="Thêm mới nhân viên"
+                title="Thêm mới"
                 :isDisabled="isLoading"
                 :clickEvent="() => openModal('')"
             />
         </div>
         <div class="main-content flex flex-column">
             <div class="filter-bar flex flex-justify-space-between flex-grow-0">
-                <div class="filter-area flex flex-align-center">
-     
+                <div class="filter-bar-left flex flex-align-center">
+                    <BaseInput
+                        v-model="search"
+                        placeholder="Tìm kiếm theo mã, tên nhân viên"
+                        fieldClass="search-field flex"
+                        @input.native="() => filterData()"
+                        @keydown.enter.native.exact="() => filterData(0)"
+                    >
+                        <template v-slot:icon >
+                            <div class="search-icon vertical-center mi mi-24 mi-24-search"></div>
+                        </template>
+                    </BaseInput>
                 </div>
-                <div class="btn-action-area flex flex-align-center">
-                    <!-- <BaseButton
-                        i="far fa-trash-alt"
-                        btnClass="delete btn-seconds btn-action"
+                <div class="filter-bar-right flex flex-align-center">
+
+                    <!-- <BaseButton 
+                        btnClass="refresh btn-seconds btn-action mi mi-24 mi-pen"
                         :isDisabled="isLoading"
-                        :clickEvent="this.delete"
+                        :clickEvent="updateMultiple"
+                        hoverTitle="Sửa"
                     /> -->
 
-                    <div class="search-field field-label flex">
-                        <input 
-                            @keydown.enter.exact="refresh"
-                            :disabled="isLoading"
-                            ref="search" 
-                            v-model="search" 
-                            type="search" 
-                            name="" 
-                            id="" 
-                            placeholder="Tìm kiếm theo mã, tên nhân viên"
-                        >
-                        <div class="search-icon vertical-center mi mi-24 mi-24-search"></div>
-                    </div>
+                    <BaseButton
+                        btnClass="delete btn-seconds btn-action mi-24"
+                        :isDisabled="isLoading"
+                        :clickEvent="() => this.delete()"
+                        hoverTitle="Xóa"
+                    >
+                        <template v-slot:icon>
+                            <i class="fal fa-trash-alt"></i>
+                        </template>
+                    </BaseButton>
 
                     <BaseButton 
-                        btnClass="refresh btn-seconds btn-action mi mi-refresh"
+                        btnClass="refresh btn-seconds btn-action mi-24"
                         :isDisabled="isLoading"
                         :clickEvent="refresh"
-                        background="./assets/img/Sprites.64af8f61.svg"
                         hoverTitle="Lấy lại dữ liệu"
                         tooltipClass="refresh-tooltip"
-                    />
+                    >
+                        <template v-slot:icon>
+                            <i class="fal fa-redo"></i>
+                        </template>
+                    </BaseButton>
+
+                    <!-- <BaseButton 
+                        btnClass="btn-seconds btn-action mi mi-24 mi-settings"
+                        :isDisabled="isLoading"
+                        :clickEvent="() => {EmployeeStore.isShowSettings = true}"
+                        hoverTitle="Cài đặt"
+                    /> -->
                 </div>
             </div>
-            <BaseGridTable 
-                :columns="this.columns"
+            <EmployeeList 
+                :columns="EmployeeStore.columns"
                 :rows="this.rows"
-                :selectedRows="selectedRows"
+                :selected="selectedRows"
                 @openModal='openModal'
-                @updateSelectedRows='updateSelectedRows'
+                @updateSelected="(value) => {this.selectedRows = value}"
+            />
+            <div class="summary"
+                v-show="EmployeeStore.isShowSummary"
+            >
+                Số cột: <span class="notosans-bold">{{EmployeeStore.columns.length}}</span>
+            </div>
+            <ThePagination 
+                v-show="EmployeeStore.isPaging"
+                :pageNumber="this.pageNumber"
+                :pageSize="this.pageSize"
+                :totalPage="this.totalPage"
+                :totalRecord="this.totalRecord"
+                @switchPage="switchPage($event)"
+                @updatePageSize="updatePageSize"
             />
         </div>
-        <ThePagination 
-            :pageNumber="this.pageNumber"
-            :pageSize="this.pageSize"
-            :totalPage="this.totalPage"
-            :totalRecord="this.totalRecord"
-            @switchPage="switchPage($event)"
-            @updatePageSize="updatePageSize"
-        />
+        
     </div>
 </template>
 
 <script>
     import BaseButton from '../../base/BaseButton.vue';
-    import BaseGridTable from '../../base/BaseGridTable.vue' 
+    import EmployeeList from './EmployeeList.vue' 
     import ThePagination from '../../layout/ThePagination.vue'
 
-    import EmployeeApi from '../../../js/api/employee/EmployeeApi'
+    import EmployeeApi from '../../../js/api/employee/employee-api'
 
-    // import BaseVCombobox from '../../base/BaseVCombobox.vue'
+    import {EmployeeStore} from './store'
+
     import BaseSpinner from '../../base/BaseSpinner.vue'
+    import BaseInput from '../../base/BaseInput.vue';
 
     export default {
         name: "TheContent",
@@ -87,89 +114,9 @@
         },
         data() {
             return {
-                columns: [
-                    {
-                        title: '',
-                        fieldName: 'Checkbox',
-                        style: 'width: 50px; left: 0',
-                        class: 'sticky'
-                    },
-                    {
-                        title: 'Mã nhân viên',
-                        fieldName: 'EmployeeCode',
-                        style: 'width: 140px; left: 50px',
-                        class: 'sticky'
-                    },
-                    {
-                        title: 'Tên nhân viên',
-                        fieldName: 'EmployeeName',
-                        style: 'width: 200px; left: 190px',
-                        class: 'sticky'
-                    },
-                    {
-                        title: 'Giới tính',
-                        fieldName: 'GenderName',
-                        style: 'width: 100px;',
-                    },
-                    {
-                        title: 'Ngày sinh',
-                        fieldName: 'DateOfBirth',
-                        style: 'width: 150px; text-align: center',
-                    },
-                    {
-                        title: 'Số CMND',
-                        fieldName: 'IdentityNumber',
-                        style: 'width: 150px;',
-                    },
-                    {
-                        title: 'Địa chỉ',
-                        fieldName: 'Address',
-                        style: 'width: 250px;',
-                    },
-                    {
-                        title: 'Số điện thoại',
-                        fieldName: 'PhoneNumber',
-                        style: 'width: 150px;',
-                    },
-                    {
-                        title: 'Email',
-                        fieldName: 'Email',
-                        style: 'width: 200px;',
-                    },
-                    {
-                        title: 'Chức danh',
-                        fieldName: 'EmployeePosition',
-                        style: 'width: 180px;',
-                    },
-                    {
-                        title: 'Bộ phận/Phòng ban',
-                        fieldName: 'DepartmentName',
-                        style: 'width: 180px;',
-                    },
-                    {
-                        title: 'Số tài khoản',
-                        fieldName: 'BankAccountNumber',
-                        style: 'width: 180px;',
-                    },
-                    {
-                        title: 'Tên ngân hàng',
-                        fieldName: 'BankName',
-                        style: 'width: 180px;',
-                    },
-                    {
-                        title: 'Chi nhánh ngân hàng',
-                        fieldName: 'BankBranchName',
-                        style: 'width: 180px;',
-                    },
-                    {
-                        title: 'Chức năng',
-                        fieldName: '',
-                        style: 'width: 100px; right: 0',
-                        class: 'sticky'
-                    }
-                ],
                 rows: [],
                 selectedRows: [],
+                updatedRows: [],
                 departmentId: '',
                 pageNumber: 1,
                 pageSize: 20,
@@ -177,10 +124,17 @@
                 totalRecord: 0,
                 search: '',
                 isLoading: true,
+                delayTimer: null,
+            }
+        },
+        computed: {
+            EmployeeStore() {
+                return EmployeeStore.state
             }
         },
         components: {
-            BaseButton, BaseGridTable, ThePagination, BaseSpinner
+            BaseButton, EmployeeList, ThePagination, BaseSpinner,
+                BaseInput
         },
         created() {
             /**
@@ -189,12 +143,28 @@
              */
             this.loadData()
 
-            this.$eventBus.$on('loadData', this.loadData)
-            this.$eventBus.$on('refresh', this.refresh)
-
+            this.$eventBus.$on('loadData', this.loadData);
+            this.$eventBus.$on('refresh', this.refresh);
+            this.$eventBus.$on('selectRow', this.selectRow);
+            this.$eventBus.$on('multipleSelectRow', this.multipleSelectRow);
+            this.$eventBus.$on('clearSelectedRow', () => this.selectedRows = [])
+            this.$eventBus.$on('pagingOff', () => {
+                this.EmployeeStore.isPaging = false
+                this.pageSize = 0;
+                this.pageNumber = 1;
+                this.loadData()
+            })
+            this.$eventBus.$on('pagingOn', () => {
+                this.EmployeeStore.isPaging = true
+                this.pageSize = 20;
+                this.loadData()
+            })
         },
 
         mounted: function(){
+        },
+
+        updated() {
         },
 
         methods: {
@@ -204,8 +174,9 @@
              * @author: NMTuan (20/07/2021)
              */
             refresh() {
-                this.pageNumber = 1
-                this.loadData()
+                this.pageNumber = 1;
+                this.selectedRows = [];
+                this.loadData();
             },
 
             /**
@@ -237,20 +208,22 @@
             delete() {
                 let popup = {
                     type: 'warning',
-                    title : "Xóa bản ghi",
                     message : 'Bạn chưa chọn bản ghi cần xóa!',
                     isShow: true,
-                    confirm: 'Đóng'
+                    confirm: 'Đồng ý',
+                    cancel: false,
                 }
                 if (this.selectedRows.length != 0) {
                     popup.type = 'alarm'
-                    popup.title = `Xóa ${this.selectedRows.length} bản ghi`
                     popup.message = `Bạn có chắc muốn xóa ${this.selectedRows.length} bản ghi hay không?`
                     popup.confirm = 'Xóa'
                     popup.callback = () => {
+                        this.isLoading = true;
                         EmployeeApi.deleteMultiple(this.selectedRows, () => {
                             this.selectedRows = [];
                             this.loadData()
+                        }, () => {
+                            this.isLoading = false
                         })
                     }
                 }
@@ -266,10 +239,19 @@
             },
 
             /**
-             * update các row được chọn
+             * Hàm chọn 1 row
+             * @author: NMTuan (28/08/2021)
+             */
+            selectRow(id) {
+                this.selectedRows = [];
+                this.selectedRows.push(id)
+            },
+
+            /**
+             * Chọn nhiều row
              * @author: NMTuan (20/07/2021)
              */
-            updateSelectedRows(id) {
+            multipleSelectRow(id) {
                 if (!this.selectedRows.includes(id)){
                     this.selectedRows.push(id)
                 } else {
@@ -281,12 +263,49 @@
             },
 
             /**
+             * Chon tất cả row trong bảng
+             * @author: NMTuan (01/09/2021)
+             */
+            selectAll() {
+                this.selectedRows = [];
+                this.rows.forEach(item => {
+                    this.selectedRows.push(item.EmployeeId)
+                })
+            },
+
+            /**
+             * Hàm lưu thay đổi các giá trong bảng
+             * @author: NMTuan (01/09/2021)
+             */
+            saveChangedRow(row) {
+                let rowFinded = this.updatedRows.find(item => item.EmployeeId == row.EmployeeId)
+                if (rowFinded) {
+                    rowFinded = row;
+                } else {
+                    this.updatedRows.push(row)
+                }
+            },
+
+            /**
+             * Hàm gọi api sửa nhiều bản ghi
+             * @author: NMTuan (01/09/2021)
+             */
+            updateMultiple() {
+                this.isLoading = true;
+                EmployeeApi.updateMultiple(this.updatedRows, () => {
+                    this.refresh()
+                }, () => {
+                    this.isLoading = false;
+                })
+            },
+
+            /**
              * update giá trị pageSize
              * @author: NMTuan (20/07/2021)
              */
             updatePageSize(pageSize) {
                 this.pageSize = pageSize
-                this.pageNumber = 1
+                this.pageNumber = 1;
                 this.loadData()
             },
 
@@ -299,6 +318,18 @@
                 this.loadData()
             },
 
+            /**
+             * Hàm delay filter dữ liệu
+             * @author: NMTuan (29/08/2021)
+             */
+            filterData(delay = 1000) {
+                clearTimeout(this.delayTimer)
+                this.delayTimer = setTimeout(() => {
+                    this.pageNumber = 1;
+                    this.loadData()
+                }, delay)
+            },
+
         }
     }
 </script>
@@ -306,5 +337,6 @@
 <style scoped>
 
 @import '../../../css/layout/content.css';
+@import '../../../css/views/employee/content.css';
 
 </style>

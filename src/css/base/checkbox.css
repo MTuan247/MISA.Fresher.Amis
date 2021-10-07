@@ -1,0 +1,44 @@
+/* Customize the label (the checkbox-container) */
+.checkbox-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: unset;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: unset;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox-container input:checked ~ .checkmark {
+    /* background-color: #2196F3; */
+    border-color: #2ca01c;
+    background-color: #fff !important;
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat;
+    background-position: -1224px -360px;
+  }

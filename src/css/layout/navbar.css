@@ -1,6 +1,6 @@
 .navbar {
     float: left;
-    width: 200px;
+    width: 180px;
     height: calc(100vh - 48px);
     background-color: #393a3d;
     color: #fff;
@@ -30,6 +30,7 @@
     cursor: pointer;
     flex-wrap: wrap;
     overflow: hidden;
+    font-size: 13px;
 }
 
 .navbar .navbar-content .nav-item-icon {
@@ -45,8 +46,16 @@
     background-position: -30px -1628px;
 }
 
+.navbar .navbar-content #overview.router-link-exact-active .nav-item-icon {
+    background-position: -30px -1585px;
+}
+
 .navbar .navbar-content #cash .nav-item-icon {
     background-position: -73px -1628px
+}
+
+.navbar .navbar-content #cash.router-link-exact-active .nav-item-icon {
+    background-position: -73px -1585px
 }
 
 .navbar .navbar-content #deposits .nav-item-icon {
@@ -108,11 +117,7 @@
 
 
 .navbar .navbar-content .nav-item.router-link-exact-active {
-    background-color: #019160;
+    background-color: #5d5d61;
     color: #fff;
+    font-weight: 700;
 }
-
-.navbar .navbar-content .nav-item.router-link-exact-active .nav-item-icon {
-    filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(344deg) brightness(104%) contrast(101%);
-}
-

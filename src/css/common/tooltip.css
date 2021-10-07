@@ -1,16 +1,15 @@
 /* Tooltip container */
-.tooltip {
+.tooltip-container {
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
   
-  /* Tooltip text */
-.tooltip .tooltiptext {
-  display: none;
+/* Tooltip text */
+.tooltip-container .tooltip-text,
+.tooltip-container .tooltiptext {
+  /* display: none; */
   width: auto;
   background-color: rgba(97, 97, 97, .9);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 22px;
   color: #fff;
   text-align: center;
@@ -27,10 +26,21 @@
 }
   
   /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  display: inline-block;
+.tooltip-text {
+  display: none;
+  z-index: 4 !important;
 }
 
+.tooltip-container:hover .tooltip-text {
+  display: inline-block;
+  left: -5px;
+}
+
+.tooltiptext {
+  left: -5px;
+}
+
+.tooltip-base,
 .btn-tooltip {
   background-color: rgba(97, 97, 97, .9);
   font-size: 14px;
@@ -45,6 +55,11 @@
   margin: 5px;
 }
 
+.r-tooltip,
 .refresh-tooltip {
   margin-right: 40px;
+}
+
+.insurance-tooltip {
+  margin-left: 120px;
 }

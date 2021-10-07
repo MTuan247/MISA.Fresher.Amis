@@ -1,5 +1,5 @@
 <template>
-    <div class="tooltip">
+    <div class="tooltip-container">
         <v-combobox
             class="v-cbx"
             ref="Input"
@@ -10,15 +10,17 @@
             dense
             v-model="computedValue"
             @blur="inputFocusoutEvent"
+            @mouseenter="isShowTooltip = true"
+            @mouseleave="isShowTooltip = false"
             :items="data"
+            :return-object="returnObject"
         ></v-combobox>
-        <span v-if="tooltipMessage" class="tooltiptext">{{tooltipMessage}}</span>
+        <span v-if="tooltipMessage" v-show="isShowTooltip" class="tooltiptext">{{tooltipMessage}}</span>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {messages} from '../../resources/vi'
     export default {
         name: "BaseVCombobox",
         props: {
@@ -44,6 +46,12 @@ import {messages} from '../../resources/vi'
             },
             tabindex: {
                 default: '0'
+            },
+            required: {
+                default: false
+            },
+            returnObject: {
+                default: true
             }
         },
         computed: {
@@ -61,7 +69,7 @@ import {messages} from '../../resources/vi'
                  */
                 set: function(value) {
                     this.$emit('input', value)
-                    this.tooltipMessage = this.getValidateMessage(value);      
+                    this.tooltipMessage = this.validate(value);      
                 },
             }
         },
@@ -70,6 +78,7 @@ import {messages} from '../../resources/vi'
                 data: [],
                 isValid: true,
                 tooltipMessage: '',
+                isShowTooltip: false,
             }
         },
         created() {
@@ -92,39 +101,41 @@ import {messages} from '../../resources/vi'
              * @author: NMTuan (18/08/2021)
              */
             inputFocusoutEvent() {
-                this.tooltipMessage = this.getValidateMessage(this.computedValue)
-                this.$emit('setValid', this.isValid);
+                this.tooltipMessage = this.validate(this.computedValue)
+                this.$emit('validate', this.isValid);
             },
 
             /**
              * Method xử lý lấy giá trị message trong tooltip
              * @author: NMTuan (19/8/2021)
              */
-            getValidateMessage(value) {
-                if (this.checkEmpty(value)) {
-                    this.isValid = false;
-                    return messages.require(this.label)
+            validate(value) {
+                if (this.required) {
+                    if (this.checkEmpty(value)) {
+                        this.isValid = false;
+                        return this.$resources.messages.required(this.label)
+                    }
                 }
-                if(value.value == undefined) {
-                    this.isValid = false;
-                    return messages.error(this.label)
+                if (this.returnObject) {
+                    if(value.value == undefined) {
+                        this.isValid = false;
+                        return this.$resources.messages.error(this.label)
+                    }
                 }
+                
                 this.isValid = true;
                 return '';
             },
 
             /**
-             * Hàm kiểm tra tồn tại giá trị trong input
-             * @author: NMTuan (18/08/2021)
+             * Hàm hiện tooltip
+             * @author: NMTuan (29/08/2021)
              */
-            checkItemExist(text) {
-                let isValid = false
-                this.data.forEach((item) => {
-                    if (item == text) {
-                        isValid = true
-                    }
-                })
-                return isValid;
+            showTooltip() {
+                this.isShowTooltip = true,
+                setTimeout(() => {
+                    this.isShowTooltip = false
+                }, 1000)
             },
 
             /**

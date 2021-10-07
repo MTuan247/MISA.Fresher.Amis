@@ -6,23 +6,31 @@
 
 .paging-bar {
     display: flex;
-    height: 56px;
+    /* height: 56px; */
     justify-content: space-between;
     align-items: center;
-    /* margin-top: 16px; */
-    margin-left: 16px;
-    margin-right: 16px;
-    padding-bottom: 8px;
+    margin-top: 6px;
+    background-color: #fff;
+    /* border-radius: 0 0 2px 2px; */
+}
+
+.paging-bar .paging-left {
+    /* padding-left: 16px; */
 }
 
 .paging-bar .paging-right {
-    margin-right: 24px;
+    /* margin-right: 24px; */
     display: flex;
 }
 
 .paging-bar .paging-dropdown {
-    border: 1px solid #babec5;
+    /* border: 1px solid #babec5; */
     margin-right: 8px;
+}
+
+.paging-bar .paging-dropdown .dropdown-content,
+.paging-bar .paging-dropdown {
+    width: 170px;
 }
 
 .paging-bar .paging-index {
@@ -36,9 +44,9 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    /* border-radius: 25px; */
     margin: 0 2px;
     cursor: pointer;
+    font-size: 13px;
 }
 
 .paging-bar .paging-index .paging-control {

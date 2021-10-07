@@ -1,9 +1,9 @@
 .v-autocomplete.v-input--is-focused .v-input__slot {
-    border: 1px solid var(--focus-color) !important;
+    border: 1px solid var(--focus-color);
 }
 
 .v-autocomplete.v-input--is-error .v-input__slot {
-    border: 1px solid var(--error-color);
+    border: 1px solid var(--error-color) !important;
 }
 
 .v-autocomplete .v-input__slot {
@@ -12,7 +12,7 @@
     border: 1px solid var(--border-color);
     box-shadow: unset !important;
     font-size: 13px;
-    padding: 0 0 0 16px !important;
+    padding: 0 0 0 8px !important;
     min-width: 300px;
     border-radius: 2px !important;
     /* margin: 0 10px; */

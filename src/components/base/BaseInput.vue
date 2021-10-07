@@ -1,31 +1,32 @@
 <template>
-    <div class="field-label tooltip">
-        <div class="label" >{{inputLabel}} <span v-if="required" style="color: red;">*</span></div>
+    <div :class="fieldClass" class="field-label tooltip-container">
+        <div v-if="inputLabel && isLabel" class="label" >{{inputLabel}} <span v-if="required" style="color: red;">*</span></div>
         <input 
             ref="Input"
             autocomplete="off"
             spellcheck="false"
+            v-model="computedValue"
             :disabled="isDisabled"
             :id="inputId" 
             :class="[inputClass, { 'field--error': !isValid, 'field--focus': isFocus }]" 
-            :type="inputType" 
-            :maxlength="inputMaxlength" 
             :name="inputName"
-            :required="required"
-            :value="this.value"
             :tabindex="tabindex"
+            :placeholder="placeholder"
+            :style="{textAlign: textAlign=='right' ? 'right' : 'left'}"
             @input="onInputEvent"
             @focus="inputFocusEvent"
             @blur="inputFocusoutEvent"
             @keypress="filterInput($event)"
+            @mouseenter="isShowTooltip = true"
+            @mouseleave="isShowTooltip = false"
         >
-        <div v-if="clearIcon" v-show="!this.isEmpty" @click="clearInput" class="mi mi-24 mi-16-close icon-right"></div>
-        <span v-if="tooltipMessage" class="tooltiptext">{{tooltipMessage}}</span>
+        <slot name="icon"></slot>
+        <div v-if="clearIcon" v-show="!this.isEmpty" @click="clearInput" class="mi mi-24 mi-16-close clear-icon"></div>
+        <span v-if="tooltipMessage" v-show="isShowTooltip" class="tooltiptext">{{tooltipMessage}}</span>
     </div>
 </template>
 
 <script>
-    import {messages} from '../../resources/vi'
     import {validate, validateEmail, validateRequire} from '../../js/common/validate'
     export default {
         name: 'BaseInput',
@@ -56,10 +57,6 @@
             },
             //Clear icon
             clearIcon: {
-                default: true,
-            },
-            //Có tooltip k
-            tooltip: {
                 default: false,
             },
             //Bắt buộc
@@ -70,19 +67,20 @@
             pattern: {
                 default: false
             },
-            //Giá trị truyền vào
-            modelValue: {
-                type: String,
-                default: ''
-            },
             isDisabled: {
                 default: false
             },
-            filterInputType: {
-                default: 'text'
-            },
             tabindex: {
                 default: '0'
+            },
+            value: {},
+            placeholder: {},
+            fieldClass: {},
+            isLabel: {
+                default: true,
+            },
+            textAlign: {
+                default: 'left'
             }
         },
         data() {
@@ -91,18 +89,21 @@
                 isEmpty: true,
                 isValid: true,
                 isShowTooltip: false,
-                value: this.modelValue,
                 tooltipMessage: '',
+                delayTooltip: null,
             }
         },
         computed: {
+            computedValue: {
+                get: function() {
+                    return this.value;
+                },
+                set: function(value) {
+                    this.$emit('input', value)
+                },
+            }
         },
         watch: {
-            modelValue: function(value) {
-                this.value = value
-                this.isFocus = false
-                // this.isValid = true
-            }
         },
         methods: {
             /**
@@ -111,6 +112,7 @@
              */
             inputFocusEvent() {
                 this.isFocus = true
+                this.$refs.Input.select()
             },
 
             /**
@@ -119,18 +121,16 @@
              */
             inputFocusoutEvent() {
                 this.isFocus = false;
-                this.tooltipMessage = this.getValidateMessage();
-                this.$emit('setValid', this.isValid);
-                this.$emit('update', this.value);
+                this.validate();
+                this.$emit('validate', this.isValid);
             },
 
             /**
              * Method xử lý sự kiện khi đang nhập
              * @author: NMTuan (15/7/2021)
              */
-            onInputEvent($event) {
-                this.value = $event.target.value;
-                this.$emit('update', $event.target.value);
+            onInputEvent() {
+                this.$nextTick(() => this.validateRequire()) 
             },
 
             /**
@@ -138,8 +138,8 @@
              * @author: NMTuan (15/7/2021)
              */
             clearInput() {
-                this.$emit('update', '');
-                this.getValidateMessage();
+                this.$emit('input', '');
+                this.validate();
                 this.isEmpty = true;
             },
 
@@ -148,7 +148,7 @@
              * @author: NMTuan (15/7/2021)
              */
             showClearIcon() {
-                if(this.value) {
+                if(this.computedValue) {
                     this.isEmpty = false;
                 } else {
                     this.isEmpty = true;
@@ -156,33 +156,68 @@
             },
 
             /**
+             * Hàm hiện tooltip
+             * @author: NMTuan (29/08/2021)
+             */
+            showTooltip() {
+                clearTimeout(this.delayTooltip)
+                this.isShowTooltip = true,
+                this.delayTooltip = setTimeout(() => {
+                    this.isShowTooltip = false
+                }, 1500)
+            },
+
+            /**
+             * Hàm validate required
+             * @author: NMTuan (20/09/2000)
+             */
+            validateRequire() {
+                let value = this.computedValue
+                if(this.required) {
+                    if(!validateRequire(value)) {                        
+                        this.isValid = false;
+                        this.tooltipMessage = this.$resources.messages.required(this.inputLabel)
+                        return false
+                    }
+                }
+                this.isValid = true;
+                this.tooltipMessage = ''
+                return true
+            },
+
+            /**
              * Method xử lý lấy giá trị message trong tooltip
              * @author: NMTuan (15/7/2021)
              */
-            getValidateMessage() {
+            validate() {
+                let value = this.computedValue
                 //Kiểm tra trường bắt buộc
                 if(this.required) {
-                    if(!validateRequire(this.value)) {                        
+                    if(!validateRequire(value)) {                        
                         this.isValid = false;
-                        return messages.require(this.inputLabel);
+                        this.tooltipMessage = this.$resources.messages.required(this.inputLabel)
+                        return false
                     }
                 }
                 //Kiểm tra email
                 if(this.inputType == 'email') {
-                    if (!validateEmail(this.value)) {
+                    if (!validateEmail(value)) {
                         this.isValid = false;
-                        return messages.invalid("Email");
+                        this.tooltipMessage = this.$resources.messages.invalid(this.inputLabel);
+                        return false
                     }
                 }
                 //Kiểm tra theo pattern
                 if(this.pattern) {
-                    if(!validate(this.value, this.pattern)) {
+                    if(!validate(value, this.pattern)) {
                         this.isValid = false;
-                        return messages.invalid(this.inputLabel);
+                        this.tooltipMessage = this.$resources.messages.invalid(this.inputLabel);
+                        return false
                     }
                 }
                 this.isValid = true;
-                return '';
+                this.tooltipMessage = '';
+                return true;
             },
 
             /**
@@ -190,13 +225,18 @@
              * @author: NMTuan (20/08/2021)
              */
             filterInput: function(evt) {
-                if (this.filterInputType == "number") {
+                if (this.inputType == "number") {
                     evt = (evt) ? evt : window.event;
                     var charCode = (evt.which) ? evt.which : evt.keyCode;
                     if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
                         evt.preventDefault();
-                    } else {
-                        return true;
+                    }
+                }
+                if (this.inputMaxlength) {
+                    if (this.computedValue.length >= this.inputMaxlength) {
+                        evt.preventDefault()
+                        this.tooltipMessage = `Không được nhập quá ${this.inputMaxlength} kí tự!`
+                        this.showTooltip()
                     }
                 }
             }

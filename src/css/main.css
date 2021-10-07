@@ -1,12 +1,13 @@
 * {
     box-sizing: border-box;
+    outline: none;
     --border-color : #c7c7c7;
     --primary-color : #4caf50;
     --focus-color: #4caf50;
     --error-color: #FF4747;
     --active-color: #4caf50;
     --text-color: #111;
-    --input-height: 32px;
+    --input-height: 42px;
 }
 
 body {
@@ -29,7 +30,7 @@ input {
 }
 
 .router-view {
-    width: calc(100% - 220px);
+    width: calc(100vh - 180px);
 }
 
 .div-icon {

@@ -1,0 +1,21 @@
+.tax-administration * {
+    --primary-color: #337ab7;
+    --focus-color: #1688a6;
+}
+
+.tax-administration .btn-base:not(.btn-seconds) {
+    background-color: #1aa4c8;
+}
+
+.tax-administration .btn-base:not(.btn-seconds):focus,
+.tax-administration .btn-base:not(.btn-seconds):hover {
+    background-color: var(--focus-color);
+}
+
+.tax-administration .tax-content {
+    background-color: #f3f8fd;
+}
+
+.tax-administration .grid th {
+    background-color: #f5f5f5;
+}

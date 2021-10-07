@@ -1,0 +1,194 @@
+.cash-detail {
+    /* margin: auto;
+    top: 50%;
+    transform: translateY(-50%); */
+    background-color: #fff;
+    /* overflow: auto; */
+    /* width: 900px; */
+    width: 100%;
+    /* border-radius: 2px; */
+    position: relative;
+}
+
+/*
+*
+*  CSS Header of form
+*
+*/
+
+
+.cash-detail .close {
+    position: absolute;
+    right: 12px;
+    /* top: 12px; */
+    cursor: pointer;
+}
+
+.cash-detail .form__header {
+    position: sticky;
+    top: 0px;
+    background-color: #fff;
+    z-index: 10;
+    padding: 15px 15px 15px 15px;
+    font-weight: 700;
+    height: 50px;
+}
+
+
+/* 
+*   CSS form body 
+*/
+
+.cash-detail .form__body {
+    display: flex;
+    padding: 0 7px;
+    padding-bottom: 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* max-height: calc(100vh - 110px); */
+    height: calc(100vh - 106px);
+}
+
+.cash-detail .label {
+    font-size: 13px;
+    color: #111;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+/* 
+*   CSS form content - input 
+*/
+
+.cash-detail .form__input {
+    padding-right: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 50%; */
+}
+
+.cash-detail .summary {
+    margin-top: 16px;
+    width: 40%;
+}
+
+.cash-detail .summary-title {
+    text-align: right;
+}
+
+.cash-detail .summary-number {
+    text-align: right;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.cash-detail .form__input-wrapper {
+    flex-grow: 0 !important;
+    padding-bottom: 8px;
+    margin-top: 16px;
+    border-left: 1px solid #eee;
+}
+
+.cash-detail .form__field-input {
+    margin-left: 8px;
+    margin-top: 16px;
+    flex-grow: 1;
+}
+
+.cash-detail .form__field-input input {
+    background-color: #fff;
+}
+
+.cash-detail #code-input {
+    width: 150px;
+}
+
+.cash-detail #gender-input {
+    margin-left: 16px;
+}
+
+.cash-detail .mx-datepicker,
+.cash-detail .date-input {
+    width: 175px !important;
+}
+
+/* Set width cho input ngắn */
+.cash-detail .sub-input {
+    /* width: calc(25% - 6px); */
+    flex-grow: 1;
+}
+
+/* Table */
+
+.cash-detail .detail-table {
+    padding: 15px 8px;
+}
+
+.cash-detail tr:hover td {
+    background-color: unset;
+}
+
+.cash-detail .grid {
+    padding-bottom: 42px;
+}
+
+.cash-detail .grid .field-label input {
+    height: 32px;
+    border: none;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+
+.cash-detail .grid .field-label input:hover {
+    outline: none;
+}
+
+.cash-detail .grid .field-label input.field--focus {
+    border: 1px solid var(--focus-color);
+    padding-left: 8px;
+}
+
+.cash-detail .grid .delete {
+    margin: auto;
+}
+
+.cash-detail .btn-grid-control-group .btn-grid-control + .btn-grid-control {
+    margin-left: 8px;
+}
+
+/* 
+*   CSS form footer 
+*/
+
+.cash-detail .form__footer {
+    background-color: #38393d;
+    /* border-top: 1px solid var(--border-color); */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* height: 75px; */
+    padding: 10px 15px;
+    margin: 0;
+}
+
+.cash-detail .form__footer #cancel,
+.cash-detail .form__footer #submit,
+.cash-detail .form__footer #save {
+    margin-left: 16px;
+    /* width: 75px; */
+    /* padding: 0 16px; */
+    width: 90px;
+    font-weight: 700;
+}
+
+.cash-detail .btn-detail-control.btn-seconds {
+    color: #fff;
+}
+
+.cash-detail .form__footer #cancel {
+    margin-left: 0;
+}
+
+.cash-detail .form__footer #submit {
+    width: 120px !important;
+}

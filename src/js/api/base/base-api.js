@@ -1,13 +1,14 @@
 import axios from 'axios'
 import showErrorPopup from '../../base/popup';
 import { showErrorToast, showToast } from '../../base/toast'
+import Resources from '../../../resources';
 
 export default class BaseAPI {
 
     constructor() {
     }
 
-    static host = null;
+    static host = "https://localhost:44334/api/v1/";
     static api = null;
 
     /**
@@ -49,33 +50,34 @@ export default class BaseAPI {
     }
 
     /**
-     * Hàm lấy bản ghi theo tiêu chí
-     * @param {int} pageSize Số bản ghi trong 1 trang
-     * @param {int} pageNumber Số trang
-     * @param {string} entityFilter Giá trị filter
-     * @param {string} departmentId Id phòng ban
-     * @param {string} positionId Id vị trí
-     * @param {function} callback Hàm gọi sau khi load
+     * Hàm lấy bản ghi theo danh sách id
+     * @param {Array}} danh sach id của bản ghi
+     * @param {Function} callback Hàm truyền vao
      */
-    static getDataFiltered(pageSize, pageNumber, entityFilter, departmentId, callback = function(){}, failCallback = function(){}) {
-        let empl = entityFilter
-        // if(!empl) empl = `NV`
-        axios.get(this.api + `employeeFilter?pageSize=${pageSize}&pageNumber=${pageNumber}&employeeFilter=${empl}&departmentId=${departmentId}`)
-            .then((response) => {
-                console.log(response)
-                callback(response)
-                if (response.data.TotalRecord == 0 || response.status == 204) {
-                    showToast('error', 'Không có dữ liệu trả về!')
-                }
-            }).catch((error) => {
-                try {
-                    showToast('error', error.response.data.UserMsg);
-                } catch {
-                    showErrorToast();
-                } finally {
-                    failCallback();
-                }
-            })
+    static getByIds(ids, successCallback = function(){}, failCallback = function(){}, completeCallback = function(){}) {
+        // axios.get(this.api + 'multipleId', {
+        //     data: data
+        // })
+        // axios({
+        //     method: 'get',
+        //     url: this.api + 'multipleId',
+        //     data: ids,
+        // })
+        axios.post(this.api + 'multipleId', ids)
+        .then((response) => {
+            successCallback(response.data)
+        }).catch((error) => {
+            try {
+                let msg = error.response.data.UserMsg ? error.response.data.UserMsg : Resources.messages.exception
+                showToast('error', msg);
+            } catch {
+                showErrorToast();
+            } finally {
+                failCallback();
+            }
+        }).finally(() => {
+            completeCallback();
+        })
     }
 
     /**
@@ -132,11 +134,7 @@ export default class BaseAPI {
      * @param {*} body 
      */
     static update(data, id, successCallback = function(){}, failCallback = function(){}, completeCallback = function(){}) {
-        axios.put(this.api + id, data, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
+        axios.put(this.api + id, data)
         .then((response) => {
             if (response.data.Success) {
                 successCallback(response);
@@ -155,7 +153,7 @@ export default class BaseAPI {
         }).finally(() => {
             completeCallback();
         })
-    }
+    } 
 
     /**
      * Hàm xóa bản ghi
@@ -213,7 +211,7 @@ export default class BaseAPI {
      */
     static async getNewCode() {
         let res;
-        await axios.get(this.api + 'NewEmployeeCode')
+        await axios.get(this.api + 'newCode')
             .then((response) => {
                 res = response.data
             }).catch((error) => {

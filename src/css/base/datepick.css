@@ -8,11 +8,12 @@
     height: var(--input-height);
     padding-right: 32px;
     font-size: 13px;
-    padding-left: 16px;
+    padding-left: 8px;
 }
 
 .mx-datepicker--error.mx-datepicker .mx-input-wrapper input {
     border: 1px solid var(--error-color);
+    color: var(--text-color);
 }
 
 .mx-datepicker .mx-input-wrapper input::placeholder {
@@ -25,7 +26,6 @@
     border-radius: 2px;
     outline: none;
     font-size: 13px;    
-    color: var(--text-color);
 }
 
 .mx-calendar-content .cell.active {

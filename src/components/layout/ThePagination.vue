@@ -27,7 +27,7 @@
                 dropdownClass="paging-dropdown"
                 direction="up"
                 :dropdownValue="pageSize"
-                @getValue="updatePageSize"
+                @input="updatePageSize"
             />
             <div class="paging-index">
 

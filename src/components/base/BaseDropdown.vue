@@ -76,7 +76,7 @@
                 this.text = text
                 this.val = val
                 this.isShow = false
-                this.$emit('getValue', this.val)
+                this.$emit('input', this.val)
             },
 
             /**

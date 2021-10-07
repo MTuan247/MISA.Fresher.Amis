@@ -1,0 +1,78 @@
+.tax-detail.info-form .form__input {
+    flex-wrap: nowrap;
+}
+
+.tax-detail.info-form .form__field-input {
+    width: calc(50% - 8px);
+}
+
+.tax-detail .mx-datepicker,
+.tax-detail .date-input {
+    width: 100%;
+}
+
+.tax-detail .tax-detail__table {
+    margin-top: 40px;
+}
+
+.tax-detail .grid-header {
+    margin: 16px 8px;
+}
+
+.tax-detail .grid-header-right {
+    justify-content: flex-end;
+}
+
+.tax-detail .btn-grid-control {
+    height: 100% !important;
+    border: none;
+}
+
+.tax-detail .btn-grid-control.btn-seconds:focus,
+.tax-detail .btn-grid-control.btn-seconds:hover {
+    background-color: #fff;
+}
+
+.tax-detail .grid-header-right .btn-grid-control i {
+    font-size: 24px;
+    color: #b8bcc3;
+}
+
+.tax-detail .grid-header-right .btn-grid-control:not(.btn--disabled) i:hover {
+    color: #6b6c72;
+}
+
+.tax-detail .grid-header__content {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 42px;
+}
+
+.tax-detail .grid-header .search-field {
+    margin-left: 8px;
+    width: 200px;
+    height: 36px;
+    align-self: center;
+}
+
+.tax-detail .grid.tax-detail-employee-list {
+    height: 200px;
+    margin: 0px 8px 4px 8px;
+    width: 870px;
+}
+
+.tax-detail .grid.tax-detail-employee-list tbody td {
+    user-select: none;
+}
+
+.tax-detail .grid.tax-detail-employee-list table tfoot {
+    z-index: 5;
+    position: sticky; 
+    bottom: 0;
+}
+
+.tax-detail .grid.tax-detail-employee-list .field-label input {
+    height: 30px;
+    padding-right: 10px;
+    border-color: #eaeaea;
+}

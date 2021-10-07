@@ -1,14 +1,18 @@
 <template>
     <div class="navbar" :class="{'navbar--collapsed' : isCollapsed}">
         <div class="navbar-content" >
-            <div id="overview" class="nav-item">
+            <router-link to="Employee" id="overview" class="nav-item">
                 <div class="nav-item-icon" style=""></div>
-                <div class="nav-item-text">Tổng quan</div>
-            </div>
-            <div id="cash" class="nav-item">
+                <div class="nav-item-text">Nhân viên</div>
+            </router-link>
+            <router-link to="Tax" class="nav-item">
+                <div class="nav-item-icon mi-tax"></div>
+                <div class="nav-item-text">Thuế</div>
+            </router-link>
+            <router-link to="Cash" id="cash" class="nav-item">
                 <div class="nav-item-icon" ></div>
                 <div class="nav-item-text">Tiền mặt</div>
-            </div>
+            </router-link>
             <div id="deposits" class="nav-item">
                 <div class="nav-item-icon" ></div>
                 <div class="nav-item-text">Tiền gửi</div>
@@ -36,10 +40,6 @@
             <div id="fixed-assets" class="nav-item">
                 <div class="nav-item-icon"></div>
                 <div class="nav-item-text">Tài sản cố định</div>
-            </div>
-            <div id="tax" class="nav-item">
-                <div class="nav-item-icon"></div>
-                <div class="nav-item-text">Thuế</div>
             </div>
             <div id="price" class="nav-item">
                 <div class="nav-item-icon"></div>

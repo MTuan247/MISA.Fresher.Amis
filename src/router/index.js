@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Employee from '../components/views/employee/Employee.vue'
+import TaxAdministration from '../components/views/tax/TaxAdministration.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/Employee',
       name: 'Employee',
       component: Employee
+    },
+    {
+      path: '/Tax',
+      name: 'TaxAdministration',
+      component: TaxAdministration
     }
   ]
 })

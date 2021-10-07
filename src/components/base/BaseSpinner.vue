@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLoading" class="modal" :style="{opacity : opacity, backgroundColor: backgroundColor}">
+    <div v-show="isLoading" class="modal" :style="{opacity : opacity, backgroundColor: backgroundColor}">
         <!-- <ClipLoader :loading="isLoading" :size="size" :style="{opacity : opacity, backgroundColor: backgroundColor}" /> -->
         <object class="spinner" :data="loaderUrl"></object>
     </div>

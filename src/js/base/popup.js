@@ -5,7 +5,7 @@ export default function showErrorPopup(message, callback = function(){}) {
         type: 'warning',
         message : message,
         isShow: true,
-        confirm: 'Đóng',
+        confirm: 'Đồng ý',
         subConfirm: '',
         cancel: '',
         callback: () => callback(),

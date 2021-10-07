@@ -35,10 +35,10 @@
             appendToast(toast) {
                 this.toasts.push(toast)
                 setTimeout(() => {
-                        this.toasts = this.toasts.filter((item) => {
+                    this.toasts = this.toasts.filter((item) => {
                         return item != toast
                     })
-                }, 2000)
+                }, 4000)
             }
         }
     }

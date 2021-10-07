@@ -1,0 +1,9 @@
+.tax-content .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tax-content .filter-bar .btn-action {
+    margin-left: 12px;
+}

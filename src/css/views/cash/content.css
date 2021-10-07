@@ -1,0 +1,97 @@
+.content {
+    position: absolute;
+    top: 48px;
+    width: calc(100% - 180px);
+    height: calc(100% - 48px);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: #f4f5f8;
+    /* padding-right: 16px; */
+}
+
+.content--collapsed {
+    width: calc(100% - 50px);
+}
+
+/* Content header */
+
+.content .content-header {
+    display: flex;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content .content-header .content-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.content .btn-group .btn-base + .btn-base {
+    margin-left: 8px;
+}
+
+/* Main content css */
+
+.content .main-content {
+    border-radius: 2px;
+    height: 100vh;
+    background-color: #fff;
+    margin: 16px;
+    /* margin-bottom: 0px; */
+    padding: 16px;
+}
+
+/* filter bar */
+
+.content .filter-bar {
+    /* background-color: #fff; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .filter-bar .filter-bar-left,
+.content .filter-bar .filter-bar-right {
+    flex-grow: 0;
+}
+
+.content .filter-bar .btn-action {
+    margin-left: 8px;
+    border: none;
+    padding: unset;
+}
+
+.content .filter-bar .btn-action:hover,
+.content .filter-bar .btn-action:focus {
+    background-color: #fff;
+}
+
+.content .filter-bar .delete i {
+    font-size: 24px;
+    color: #b8bcc3;
+}
+
+.content .filter-bar .delete:hover i {
+    color: #6b6c72;
+}
+
+/* input field */
+
+.content .filter-bar .search-field {
+    width: 250px;
+}
+
+.content .filter-bar .search-field .search-icon {
+    position: absolute;
+    right: 8px;
+}
+
+/* filter dropdown */
+
+.content .filter-bar .filter {
+    width: 300px;
+    margin-left: 16px;
+}

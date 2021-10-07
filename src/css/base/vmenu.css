@@ -1,10 +1,17 @@
 .v-context-menu .v-btn {
     color: #0075c0 !important;
     box-shadow: none !important;
-    background-color: #fff !important;
+    background-color: unset !important;
     padding: 0 !important;
     min-width: unset !important;
-    width: 36px;
+    width: 24px;
+    height: 20px !important;
+    border-radius: 0px;
+    margin-left: 8px;
+}
+
+.v-context-menu .v-btn:focus {
+    border: 1px solid #0075c0;
 }
 
 .v-context-menu .v-btn:before {
@@ -13,7 +20,7 @@
 }
 
 .v-context-menu.v-menu__content {
-    transform: translateX(-20px);
+    transform: translateX(-20px) translateY(5px);
     border-radius: 2px !important;
     border: 1px solid #babec5;
 }
